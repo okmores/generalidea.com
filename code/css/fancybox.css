@@ -1,0 +1,111 @@
+
+/*  ===== FANCYBOX CSS ===== 
+    
+    See https://fancyapps.com/docs/ui/fancybox/styles/
+    The default values are downloaded from the CDN.  Modified values 
+    on this page overide the defaults. For reference, 
+    the complete CSS default file is in code/css/fancybox master.css. 
+    (It should not be altered.)
+   
+    See aspect ratio hack at bottom.  */
+
+/* ======================== */
+
+/*  PLAYER SETUP
+    Change the default values for the fancybox player. */
+
+
+    :root {
+        --f-progressbar-height: 2px;
+        --f-progressbar-color: var(--f-carousel-theme-color, #1baf3bff);
+        --f-progressbar-opacity: 1;
+        --f-progressbar-z-index: 30
+        }
+
+    #full-page-slider {
+        /* ??? */
+        --f-carousel-slide-width: 100svw;
+        /* --f-carousel-gap: 10px; */
+        /* --f-carousel-slide-padding: 50px; */
+        /* --f-carousel-slide-bg: #b81f1f00; */}
+
+    .f-caption {  
+        font:           var(--font-sans-serif );
+        font-family:    var(--font-sans-serif);
+        color:          var(--player-btn-color);
+        }
+
+    legend {
+        font:           var(--font-sans-serif);
+        font-family:    var(--font-sans-serif);
+        color:          var(--legend-color-dk);
+        }    
+        
+    .fancybox__container {
+        /* --fancybox-color: var(--player-btn-color); */
+        /* --fancybox-backdrop-bg: rgba(31, 30, 47, 0.85); */
+        --f-toolbar-padding: 4px;
+        --f-toolbar-font-size: 1rem;
+        --f-toolbar-font: var(--font-sans-serif);
+        --f-toolbar-bg: none;
+        --f-toolbar-margin: 0;
+        --f-toolbar-gap: 0;
+        /* --f-carousel-slide-width: 100%; */
+        /* --f-carousel-slide-height: 100%; */
+        /* --f-carousel-slide-padding: 10px; */
+        /* --f-html-bg: #000000; */
+        --f-caption-font: var(--font-sans-serif);
+        --f-caption-color:  var(--player-btn-color);
+        --f-caption-line-height: .5rem;
+        --f-button-width: 40px;
+        --f-button-height: 40px;
+        --f-button-color:  var(--player-btn-color);
+        --f-button-bg: rgba(0, 0, 0, 0.7);
+        --f-arrow-bg: rgba(103, 103, 103, 0.465);
+        --f-arrow-color: var(--player-btn-color);
+        --f-progressbar-color: #ffffff99;
+        --f-progressbar-height: 2px;
+        --f-legend-color: var(--legend-color-lt);
+        }
+
+    .fancybox__container > * {
+        font: var(--font-sans-serif);
+        }
+
+    /* .f-carousel {
+        --f-carousel-theme-color: var(--player-btn-color);
+        } */
+    
+    .f-html {
+        padding: 15px;
+        color: var(--f-html-color, currentColor);
+        /* background-color: green; */
+        }
+
+    .slide-wrapper {
+        width: 1500px;    
+        height: 1500px;
+        position: relative;
+        }
+
+/*  
+
+POSSIBLE ASPECT RATIO SPY FOR FANCTBOX
+Possible solution to the problem of aspect ratio IN fancybox. 
+REF: https://css-tricks.com/container-queries-a-new-way-to-build-responsive-components/
+
+    Container minimum and maximum lengths 
+    cqmin (Container query minimum size): The value of cqi or cqb, whichever is smaller. 
+    cqmax (Container query maximum size): The value of cqi or cqb whichever is larger. 
+
+    @container my-container (width > 900px) {
+    .child {
+        width: 25cqw;
+        height: 30cqmin;
+    }
+    .grandchild {
+        width: 15cqmax;
+        height: 10cqb;
+    }
+}
+*/

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-U A-Compatible" content="IE=edge">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	
+<!-- FONTS -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+	
+<!-- SCRIPTS -->
+	<script defer src="code/js/devTools.js"></script>
+	<script defer src="code/js/ini.js"></script>
+	<script defer src="code/js/data.js"></script>
+	<script defer src="code/js/content.js"></script>
+	<script defer src="code/js/nav.js"></script>
+	<script defer src="code/js/utilities.js"></script>
+	<script defer src="code/js/fancybox.js"></script>
+	<script defer src="code/js/imageGrid.js"></script>
+	<script defer src="//assets.mediadelivery.net/playerjs/playerjs-latest.min.js"></script>
+
+<!-- FANCYBOX -->
+	<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/panzoom/panzoom.umd.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.autoscroll.umd.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.autoplay.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/panzoom/panzoom.css" />
+
+<!-- GSAP -->
+	<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+<!-- FAVICON -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/site_manifest/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/site_manifest/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/site_manifest/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+
+<!-- STYLESHEETS -->
+	<link rel="stylesheet" type="text/css" href="code/css/resets.css">
+	<link rel="stylesheet" type="text/css" href="code/css/settings.css" >
+	<link rel="stylesheet" type="text/css" href="code/css/layout.css" >
+	<link rel="stylesheet" type="text/css" href="code/css/nav.css" >
+	<link rel="stylesheet" type="text/css" href="code/css/utilities.css" >
+	<link rel="stylesheet" type="text/css" href="code/css/fancybox.css" >
+
+	<title>PREUIT HOLLAND / GENERAL IDEA FILMS</title>
+
+</head>
+
+<body>
+
+<!--  HEADER & MENU -->
+
+<header id='header'>
+
+	<!-- ===== HOME BTN ===== 
+	Home btn has two functions:
+		1. HOVER: Open the main menu
+		2. CLICK: Navigate to the home page 
+	IF TOUCH, the home button will open the main menu and wait. 
+		1. TAP ONE: if main menu is closed, open main menu. 
+		2. TAP TWO: if main menu is open, go to home page.
+		Note: This is the home btn, not the main menu -->
+
+	<!-- <div id="main-menu-scaler"> -->
+		<nav id='home-btn-container'> 
+			<img
+				id='home-btn'
+				src="media/images/menu/GIBell02.svg"
+				alt="Home page button"
+				data-source="home-btn"
+				data-name="Home"
+				data-label="Home"
+				class="home-btn btn"
+				aria-label="Home page button; also opens the main menu on hover or tap.">
+		</nav>
+
+		<!-- ==== MAIN MENU ===== -->
+
+		<nav id='main-menu' 
+			class='closed'
+			data-name="main-menu"
+			data-state = "closed"
+			data-timeoutID="0"
+			aria-label="Main menu">
+
+			<div class='menu-items'>
+
+				<li class="Dictionary btn "  
+					data-label="Who?"
+					data-name="Dictionary">  
+					<img src="media/images/menu/Mortarboard.svg" 
+						alt="Go to Preuit's definition page"
+						data-source="main-menu" 
+						data-name="Dictionary" 
+						class="Dictionary">
+				</li>
+			
+				<li class="Film btn "  
+					data-label="Film"
+					data-name="Film">  
+					<img src="media/images/menu/Baseball Cap.svg" 
+						alt="Go to the film gallery"
+						data-source="main-menu" 
+						data-name="Film"
+						class="Film">
+				</li>
+			
+				<li class="Print btn "  
+					data-label="Print"
+					data-name="Print">  
+					<img src="media/images/menu/Clark Kent.svg" 
+						alt="Go to the print gallery"
+						data-source="main-menu" 
+						data-name="Print"
+						class="Print">
+				</li>
+			
+				<li class="Photo btn"  
+					data-label="Photo"
+					data-name="Photo">  
+					<img src="media/images/menu/Safari Hat.svg" 
+						alt="Go to the photo gallery"
+						data-source="main-menu" 
+						data-name="Photo"
+						class="Photo btn">
+				</li>
+			
+				<!-- <li class="Artist hide"  
+					data-label="Artist"
+					data-name="Artist">  
+					<img src="media/images/menu/Beret.svg" 
+						alt="Go to the art/design page"
+						data-source="main-menu" 
+						data-name="Artist"
+						class="Artist btn">
+				</li> -->
+			
+				<li class="Clients btn "  
+					data-label="Clients"
+					data-name="Clients">  
+					<img src="media/images/menu/Top Hat.svg" 
+						alt="Go to the clients page"
+						data-source="main-menu" 
+						data-name="Clients"
+						class="Clients btn">
+				</li>
+			
+				<li class="Contact btn "  
+					data-label="Work"
+					data-name="Contact">  
+					<img src="media/images/menu/Hard Hat.svg" 
+						alt="Go to the contact page"
+						data-source="main-menu" 
+						data-name="Contact"
+						class="Contact btn">
+				</li>
+			
+			</div> 
+		</nav>
+	<!-- </div> <!-- #main-menu-scaler --> -->
+
+	<!-- ==== DEV PANEL ===== -->
+	<!-- If devMode == false, this will be hidden. -->
+
+	<div id="dev-panel-btn" 
+		class="dev-btn btn"
+		type="button"
+		data-source="dev-panel"
+		alt="Developer panel toggle button (usually hidden)">
+		<div class="dev-icon"></div>
+	</div>
+
+	<div id='dev-panel' 
+		class="closed touchable" 
+		alt="Developer panel (usually hidden)">
+		<div class="dev-panel-container">
+			<ul id='dev-data'>
+				<li id='currentPage'></li>
+				<li id='orientation'></li>
+				<li id='size'></li>
+				<li id='area'></li>
+				<li id='ratio'></li>
+				<li id='browser'></li>
+				<li id='os'></li>
+				<li id='device'></li>
+				<li id="retina"></li>
+				<li id='touch'></li>
+			</ul>
+			<ol id='dev-data-label'>
+				<li>Page:</li>
+				<li>View:</li>
+				<li>Size:</li>
+				<li>Area:</li>
+				<lI>Ratio:</li>
+				<li>Browser:</li>
+				<li>OS:</li>
+				<li>Device:</li>
+				<li>Retina:</li>
+				<li>Touch:</li>
+			</ol>
+			<!-- DEV TESTING BUTTONS -->
+			<div id = "dev-buttons">
+				<li><a href="#"
+					data-source="home-menu"
+					data-id='loadVault'
+					data-name='loadVault'
+					data-class='devBTN'
+					>LOAD VAULT</a></li>
+				<li><a href="#"
+					data-source="home-menu"
+					data-id='getVaultItems'
+					data-name='getVaultItem'
+					data-class='devBTN'
+					>GET VAULT ITEM</a></li>
+				<li><a href="#"
+					data-source="home-menu"
+					data-id='findMedia'
+					data-name='getMedia'
+					data-class='devBTN'
+					>TEST</a></li>
+				<li><a href="#"
+					data-source="home-menu"
+					data-id='loadVault'
+					data-name='loadVault'
+					data-class='devBTN'
+					>Showtime</a></li>
+			</div>
+		</div>
+	</div>
+
+</header>
+
+<!--  MAIN SITE  -->
+
+<div class="scroller">
+
+	<section id="home" class="scroller-page "data-name='Home Page'>
+		<div class="full-page-wrapper">
+			<div class="home-content">
+				<h1 class="PH-name-live" alt="Preuit Holland"><span class="K-2">P</span>reuit Holland</h1>
+				<!-- <div class="bouncing-arrow"></div> -->
+				<!-- <img class="down-arrow" src="media/images/chrome/arrow_down_tall.svg" alt="scroll down"> -->
+			</div>
+		</div>
+	</section>
+
+	<section id="dictionary" class="scroller-page">
+		<div class="full-page-wrapper">
+			<div class='dictionary-container' >
+
+				<aside class="float-shim" style="--float-shim: 65px"></aside>
+					<img id="pruPic" src='media/images/icons/PruPic-006-text-SM-alpha.png'>
+				
+				<p class="medium"><span class="bold K1">ring·er</span><sup class="light">1</sup><span class="fw-3">|ˈriNGər|</span>
+					
+					<span class="bold K1">noun</span>
+					
+					<span class="bold">1.</span> a per&shy;son who is highly proficient at a particular skill or occupation and is brought in to supplement a team:
+					<span class="light IT K1">&nbsp;it was revealed that a competing firm brought in a paid ringer.</span>
+					
+					<span class=""> </span>•&nbsp;an athlete or horse fraudulently substituted for another to gain an advantage in a competition:
+					<span class="light IT K1">&nbsp;league eligibility rules had grown flexible and ringers began suiting up.</span>
+					
+					•&nbsp;<span class='bold IT K1'>informal</span> a person or thing that looks exactly like another:
+					<span class="light IT K1">&nbsp;he's a ringer for the Italian actor Marcello Mastroianni.</span>
+					
+					<span class="bold">2.</span>&nbsp;a person or device that rings something.</p>
+					</div>
+				</div>
+				
+	</section>
+
+	<!-- <section id="code" class="scroller-page hide">
+		<div class="full-page-wrapper">
+			</div class="code-content">
+				<img src="media/images/chrome/PreuitCode.svg" 
+				alt="Silly computer code describing Preuit.">
+			</div>
+		</div>
+	</section>  -->
+
+	<!-- <section id="SPLASH-2" class="scroller-page hide">
+		<div class="full-page-wrapper">
+			<img src=	"media/images/posters/GreenCrown_001-BW-FPO.jpg"
+				 class=	"focus-b crop"
+				 alt=	"Tahitian man in crown">
+		</div>
+	</section> -->
+
+	<section id="gallery-film" class="scroller-page ">
+		<div class="full-page-wrapper ">
+			<div class="gallery">
+
+				<img 
+					src=		"media/images/posters/Shot03_Top01_960_SHAR-sharpen.jpg"
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/e38fe15c-66cf-4614-9a08-ae3e5bfdf401/play_720p.mp4"					
+					data-fancybox=	"gallery-video"
+					data-caption=	"Balancing Act"
+					data-legend=	"Director: Preuit Holland"
+					class=	"focus-t crop"
+					alt=		"A woman sitting on a couch on top of a house.">
+				
+				<img 
+					src=	"media/images/posters/Nimbo2014_CLN_0166-PAI.webp"
+					href=	"https://vz-a8f8a310-da0.b-cdn.net/60fb149a-9e0c-425b-bd28-3400292feef2/play_720p.mp4"					
+					data-fancybox=	"gallery-video"
+					data-caption=	"Cloud Watch"
+					data-legend=	"Director: Preuit Holland"
+					class=	"focus-bl crop"
+					alt=	"A reporter on location standing in a dry riverbed.">
+				
+				<img 
+					src=		"media/images/posters/Bar1_001-PAI.webp"
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/15de58a4-39f8-4b00-9550-62951f3ede47/play_720p.mp4"					
+					data-fancybox=	"gallery-video"
+					data-caption=	"Bar Babes"
+					data-legend=		"Director: Preuit Holland"
+					class=	"focus-tr crop"
+					alt=		"This guy walks into a bar filled with beautiful women.">
+
+				<img src=	"media/images/posters/DUI2012Poster-PAI.webp"
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/f8a92de3-a4db-4995-baf0-0238b0afae29/play_720p.mp4"					
+					data-fancybox=	"gallery-video"
+					data-caption=	"You drink. You drive. You walk."
+					data-legend=		"Director: Preuit Holland"
+					class=	"focus-tr crop"
+					alt=		"A man sitting at a desolate bus stop alone.">
+					
+				<img 
+					src=		"media/images/posters/Swim2012_Poster_SHAR_stab-stabilize.jpg"
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/7aabc879-dea1-40d6-a70b-b57bce149abb/play_1080p.mp4"
+					data-fancybox="gallery-video"
+					data-caption="Swimming"
+					class=	"focus-c crop"
+					alt=		"A terrified woman swims underwater toward the camera.">
+
+				<img 
+					src=		"media/images/posters/Sprinkler 01 crop.webp"
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/1982cae2-774c-4363-9c4c-353be699e7dc/play_720p.mp4"
+					data-fancybox="gallery-video"
+					data-autosize="true"
+					data-caption="Sprinkler"
+					class=	"focus-t crop"
+					alt=		"A Shelter Insurance agent is out jogging when he sees a neighbor in need.">							
+					<!-- href=	"https://player.mediadelivery.net/play/405982/1982cae2-774c-4363-9c4c-353be699e7dc" -->
+					<!-- data-type="iframe" -->
+					<!-- data-width="960" -->
+					<!-- data-height="540" -->
+
+				<img 
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/345ffd29-a789-42c7-9b94-1f5c5be9bf83/play_720p.mp4"
+					data-fancybox=	"gallery-video"
+					data-caption=	"The Ventriloquist"
+					data-legend=		"Director: Preuit Holland"
+					class=	"focus-c crop hide"
+					alt=		"A ventriloquist sings while drinking a glass of water."> 
+
+				<img 
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/5b87d424-845a-46ab-b815-33e0200a600b/play_720p.mp4"					
+					data-fancybox=	"gallery-video"
+					data-caption=	"Lucile"
+					data-legend=		"Director: Preuit Holland"
+					class=	"focus-t crop hide"
+					alt=		"An eldery woman, a baking expert.">
+
+				<img	
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/2408cf10-b09e-4b68-a3c7-da1024ec7761/play_720p.mp4"					
+					data-fancybox=	"gallery-video"
+					data-caption=	"Cops In Shops"
+					data-legend=		"Director: Preuit Holland"
+					class=	"focus-t crop hide"
+					alt=		"An undercover cop poses as a clerk in a convenience store.">
+	
+				<img	
+					href=		"https://vz-a8f8a310-da0.b-cdn.net/aae3e3bc-0e4d-4f9b-b435-dcea1cc36986/play_720p.mp4"					
+					data-fancybox=	"gallery-video"
+					data-caption=	"Cowboys"
+					data-legend=		"Director: Preuit Holland"
+					class=	"focus-t crop hide"
+					alt=		"Thirsty cowboys search downtown Toronto for a beer.">
+	
+			</div>
+		</div>
+	</section>
+
+	<section id="gallery-print" class="scroller-page ">
+		<div class="full-page-wrapper ">
+			<div ID="print-work" class="gallery">
+				
+				<img src="media/images/posters/HalfBrainPoster01_SHR.jpg" href="media/images/samples/NoritsuHalfBrain-PAI.webp"
+					data-fancybox="gallery-print" data-legend="Photo: Dan Lamb" class="focus-t crop"
+					alt="A photolab technician with half a brain.">
+				
+				<img src="media/images/posters/RC Bathtube 003 poster RT CC.webp" href="media/images/samples/RC Bathtub 001a.webp"
+					data-fancybox="gallery-print" data-legend="Photo: Tim Olive" class="focus-c crop"
+					alt="A toy sail boat sitting in a bath tub.">
+			
+				<img src="media/images/posters/Yamaha-Bad-Bike-poster-crop.webp" href="media/images/samples/YamahaBad_2017.webp"
+					data-fancybox="gallery-print" data-legend="Photo: David Lebon" class="focus-tr crop"
+					alt="The Yamaha Virago motorcycle. Never has a bike so bad beem so good.">
+				
+				<img src="media/images/posters/GTE Triplets poster.webp" href="media/images/samples/GTE Three Way Calling.webp"
+					data-fancybox="gallery-print" data-legend="Photo: Geof Kern" class="focus-t crop"
+					alt="Triplets in square dance dresses pose with their band instruments.">
+		
+				<img src="media/images/posters/Peabrain_SHR.jpg" href="media/images/samples/Noritsu Peabrain-PAI-sample.webp"
+					data-fancybox="gallery-print" data-legend="Photo: Dan Lamb" class="focus-b crop"
+					alt="A picture of a photolab technician with a tiny head.">
+		
+				<img src="media/images/posters/Olive Poster detail 2X-PAI-FPO-CROP.webp" href="media/images/samples/Olive Poster.webp"
+					data-fancybox="gallery-print" data-legend="Illustration: Preuit Holland" class="focus-t crop"
+					alt="A poster of a giant olive balloon in Macy's Thanksgiving day parade.">
+		
+			</div>
+		</div>
+	</section>
+
+	<section id="gallery-photo"  class="scroller-page ">
+		<div class="full-page-wrapper ">
+			<div class="gallery">
+
+				<img src=	"media/images/posters/GreenCrown_003-2X-PAI-CROP2.webp"
+					href=	"media/images/samples/GreenCrown_003-2X-PAI-CROP.webp"
+					data-fancybox="gallery-photo"
+					data-legend="Photo: Preuit Holland"
+					class=	"focus-t crop"
+					alt=	"Tahitian man in a green crown."	>
+
+				<img src=	"media/images/posters/Eros and Psyche CU-PAI-poster.webp"
+					href=	"media/images/samples/Eros and Psyche CU-PAI-Noise.webp"
+					data-fancybox="gallery-photo"
+					data-legend="Photo: Preuit Holland"
+					class=	"focus-c crop"
+					alt=	"A closeup of Antonio Canova's 1793 marble sculpture, Eros and Psyche, which depicts Eros reviving Psyche with a kiss.">
+
+					<img src=	"media/images/posters/Funky Accountant-GIG-SHR-2X-PAI poster.webp"
+					href=	"media/images/samples/Funky Accountant-GIG-SHR-2X-PAI.webp"
+					data-fancybox="gallery-photo"
+					data-legend="Photo: Preuit Holland"
+					class=	"focus-t crop"
+					alt=	"A goofy accountant who picked the wrong insurance plan.">
+
+					<img src=	"media/images/posters/Arches muted 2X-PAI poster.webp"
+					href=	"media/images/samples/Arches muted 4X-PAI-A.webp"
+					data-fancybox="gallery-photo"
+					data-legend="Photo: Preuit Holland"
+					class=	"focus-t crop"
+					alt=	"A couple vacations at the seaside in Laguna Beach.">
+
+					<img src=	"media/images/posters/Rosa 2014-PAI-poster.webp"
+					href=	"media/images/samples/Rosa 2014-PAI.webp"
+					data-fancybox="gallery-photo"
+					data-legend="Photo: Preuit Holland"	
+					class=	"focus-br crop"
+					alt=	"A beautiful Tahitian woman wearing a pareo looks across the ocean.">
+
+					<img src=	"media/images/posters/Clarence-PAI poster.webp"
+					href=	"media/images/samples/Clarence-PAI.webp"
+					data-fancybox="gallery-photo"
+					data-legend="Photo: Preuit Holland"
+						data-title="Photo: Preuit Holland" 
+					class=	"focus-t crop"
+					alt=	"A power company lineman grins while electric sparks jump from his head.">
+
+			</div>
+		</div>
+	</section>
+
+	<section id="clients" class="scroller-page">
+		<div class="full-page-wrapper">
+			<div class="client-content">
+				<p class="client-headline">Been There</p>
+				<div class="client-logo-container">
+					<div class="client-logo-gallery">
+					<div class="logo-1" >
+						<img src="media/images/icons/client-logos/JBL Logo.svg"></div>
+					<div class="logo-2">
+						<img src="media/images/icons/client-logos/Lexus Logo.svg"></div>
+					<div class="logo-3">
+						<img src="media/images/icons/client-logos/Apple Logo.svg"></div>
+					<div class="logo-4">
+						<img src="media/images/icons/client-logos/Labatt Logo.svg"></div>
+					<div class="logo-5">
+						<img src="media/images/icons/client-logos/Sunset Logo.svg"></div>
+					<div class="logo-6">
+						<img src="media/images/icons/client-logos/Royal Caribbean Logo.svg"></div>
+					<div class="logo-7">
+						<img src="media/images/icons/client-logos/Fox Logo.svg"></div>
+					<div class="logo-8">
+						<img src="media/images/icons/client-logos/Taco Bell Logo.svg"></div>
+					<div class="logo-9">
+						<img src="media/images/icons/client-logos/Tahilti Logo.svg"></div>
+					<div class="logo-10">
+						<img src="media/images/icons/client-logos/Porsche Logo.svg"></div>
+					<div class="logo-11">
+						<img src="media/images/icons/client-logos/Yamaha Logo.svg"></div>
+					<div class="logo-12">
+						<img src="media/images/icons/client-logos/American Express Logo.svg"></div>
+					<div class="logo-13">
+						<img src="media/images/icons/client-logos/Nissan Logo.svg"></div>
+					<div class="logo-14">
+						<img src="media/images/icons/client-logos/Columbia Pictures Logo.svg"></div>
+					<div class="logo-15">
+						<img src="media/images/icons/client-logos/Cigna Logo.svg"></div>
+					<div class="logo-16">
+						<img src="media/images/icons/client-logos/IMAX Logo.svg"></div>
+					<div class="logo-17">
+						<img src="media/images/icons/client-logos/Nikon Logo.svg"></div>
+					<div class="logo-18">
+						<img src="media/images/icons/client-logos/Moosehead Logo.svg"></div>
+					<div class="logo-19">
+						<img src="media/images/icons/client-logos/Paramount Logo.svg"></div>
+					<div class="logo-20">
+						<img src="media/images/icons/client-logos/Catalina Logo.svg"></div>
+					<div class="logo-21">
+						<img src="media/images/icons/client-logos/GTE Logo.svg"></div>
+					<div class="logo-22">
+						<img src="media/images/icons/client-logos/Auberge Logo.svg"></div>
+					<div class="logo-23">
+						<img src="media/images/icons/client-logos/Holland America Logo.svg"></div>
+					<div class="logo-24">
+						<img src="media/images/icons/client-logos/Disney Logo.svg"></div>
+					<div class="logo-25">
+						<img src="media/images/icons/client-logos/Dos Equis Logo.svg"></div>
+					<div class="logo-26">
+						<img src="media/images/icons/client-logos/BP Logo.svg"></div>
+					<div class="logo-27">
+						<img src="media/images/icons/client-logos/Audi Logo.svg"></div>
+					<div class="logo-28">
+						<img src="media/images/icons/client-logos/Honda Logo.svg"></div>
+					<div class="logo-29">
+						<img src="media/images/icons/client-logos/Shelter Logo.svg"></div>
+					<div class="logo-30">
+						<img src="media/images/icons/client-logos/Singapore Airlines Logo.svg"></div>
+					<div class="logo-31">
+						<img src="media/images/icons/client-logos/Pizza Hut Logo.svg"></div>
+					<div class="logo-32">
+						<img src="media/images/icons/client-logos/Princess Cruises Logo.svg"></div>
+				</div> <!-- client-logo-container end -->
+			</div>
+		</div>
+		</div>
+	</section>
+
+	<section id="contact-page" class="scroller-page">
+		<div class="full-page-wrapper">
+
+			<div class="contact-info-container">
+						
+						<div class="phone-number">
+								<img src="code/css/img/286-0242-optical-med.svg" alt="Phone number 310-286-0242">
+						</div>		
+
+						<div class="contact-info-subgrid">
+								<div class="contact-info-item-1 K2">
+									<div>
+										General Idea<br />
+										269 South Beverly Drive 
+										No. 673<br />
+										Beverly Hills, CA 9O212 <br />
+										<a class="contact-email" href="mailto: pholland@generalidea.com">pholland@generalidea.com </a> 
+									</div>
+								</div>
+						</div>	
+
+						<div class="footer-panel">
+								<p id="copyright" class="fineprint CC">temp</p>
+						</div>
+			</div>	
+					
+		</div>
+
+			
+
+		</div>
+	</section>
+
+	</div> <!-- SCROLLER END -->
+</body>
+</html>
+
+
+<!-- <div class="preuit-code">
+	<img src="media/images/chrome/PreuitCode.svg" 
+		class="preuit-code-img"
+		alt="Silly computer code describing Preuit.">
+</div> -->
+
+<!-- 	
+	Twenty Words Before "ringer"  
+	Rinderpest  Rine  Rinf  Ring  Ring a bell  Ring around  Ring bark  Ring-binder  Ringbolt  Ring-bound  Ring-dove  Ring-fence Ring finger  Ring-fire  Ring gear  Ring gold  Ring histogram  Ringing  Ringingly  Ringleader  
+	Twenty Words After "ringer"  
+	Ring-fenced  Ringgit  Ringer-like  Ringing tone  Ringer's lactate  Ringer's solution  Ringette  Ringing  Ringingly  Ring-main  Ringmaster  Ring-name  Ring net  Ringo  Ring off  Ring of Gyges  Ring of steel  Ring on  Ring out  Ring pull -->
+	
+	<!-- A highly skilled or experienced individual secretly brought into a competition to gain an unfair advantage  -->
+	<!-- 	a student paid by another to take an exam
+	c. any person or thing that is fraudulent; fake or impostor
+	d. a substitute or addition, as a professional musician hired to strengthen a school orchestra
+	We hired three ringers for the commencement concert -->
+	
+	<!-- <img src="media/images/icons/EngravedPru-003-cutout.webp" alt='Dictionary definition of "ringer"' class="dictionary-content"> -->
+

@@ -1,0 +1,283 @@
+
+
+/* 	===== BOUNCING ARROW ===== */
+
+.loader {
+  width: 15px;
+  height: 20px;
+  margin-left: 15px;
+  background: #FFF;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: bump 0.4s ease-in infinite alternate;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 0);
+  position: absolute;
+  border: 15px solid transparent;
+  border-top-color: #FFF;
+}
+
+@keyframes bump {
+  0% {
+    transform: translate(-50%, 5px);
+  }
+  100% {
+    transform: translate(-50%, -5px);
+  }
+}
+
+/* 	===== HIDE/SHOW OBJECTS ===== */
+
+.hide {display: none;}
+.show {display: block;}
+
+/*	==== GOTO =====
+
+Example scrollTo code...
+	See
+#myDIV {
+  height: 250px;
+  width: 500px;
+  overflow: auto;
+  background: pink;
+}
+
+#content {
+  margin: 10px;
+  height: 1000px;
+  width: 460px;
+  background-color: green;
+}
+*/
+
+
+/* 	===== LOADING SPINNER ===== */
+
+/* SPINNERS FROM CSSSCRIPT.COM */
+/* https://cssloaders.github.io/ */
+/* The html these attach to is in the HTML Fragments file.  <-- ? */
+
+/* CLOUD SPINNER */
+/*
+	.loader {
+		width: 175px;
+		height: 80px;
+		display: block;
+		margin: auto;
+		background-image: radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), radial-gradient(circle 50px at 50px 50px, #FFF 100%, transparent 0), radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), linear-gradient(#FFF 50px, transparent 0);
+		background-size: 50px 50px, 100px 76px, 50px 50px, 120px 40px;
+		background-position: 0px 30px, 37px 0px, 122px 30px, 25px 40px;
+		background-repeat: no-repeat;
+		position: relative;
+		box-sizing: border-box;
+	}
+	.loader::after {
+		content: '';
+		left: 50%;
+		bottom: 0;
+		transform: translate(-50%, 0);
+		position: absolute;
+		border: 15px solid transparent;
+		border-top-color: #FF3D00;
+		box-sizing: border-box;
+		animation: fadePush 1s linear infinite;
+	}
+	.loader::before {
+		content: '';
+		left: 50%;
+		bottom: 30px;
+		transform: translate(-50%, 0);
+		position: absolute;
+		width: 15px;
+		height: 15px;
+		background: #FF3D00;
+		box-sizing: border-box;
+		animation: fadePush 1s linear infinite;
+	}
+
+	@keyframes fadePush {
+		0% {
+			transform: translate(-50%, -15px);
+			opacity: 0;
+		}
+		50% {
+			transform: translate(-50%, 0px);
+			opacity: 1;
+		}
+		100% {
+			transform: translate(-50%, 15px);
+			opacity: 0;
+		}
+	}
+
+	/* COFFEE CUP SPINNER */
+
+	/*
+
+	.loader {
+		width: 48px;
+		height: 40px;
+		margin-top: 30px;
+		display: inline-block;
+		position: relative;
+		background: #FFF;
+		border-radius: 15% 15% 35% 35%;
+	}
+	.loader::after {
+		content: '';
+		box-sizing: border-box;
+		position: absolute;
+		left: 45px;
+		top: 8px;
+		border: 4px solid #FFF;
+		width: 16px;
+		height: 20px;
+		border-radius: 0 4px 4px 0;
+	}
+	.loader::before {
+		content: '';
+		position: absolute;
+		width: 1px;
+		height: 10px;
+		color: #FFF;
+		top: -15px;
+		left: 11px;
+		box-sizing: border-box;
+		animation: animloader 1s ease infinite;
+	}
+
+	@keyframes animloader {
+			0% {
+		box-shadow: 2px 0px rgba(255, 255, 255, 0), 12px 0px rgba(255, 255, 255, 0.3), 20px 0px rgba(255, 255, 255, 0);
+	}
+			50% {
+		box-shadow: 2px -5px rgba(255, 255, 255, 0.5), 12px -3px rgba(255, 255, 255, 0.5), 20px -2px rgba(255, 255, 255, 0.6);
+	}
+			100% {
+		box-shadow: 2px -8px rgba(255, 255, 255, 0), 12px -5px rgba(255, 255, 255, 0), 20px -5px rgba(255, 255, 255, 0);
+	}
+		}
+
+
+/* ATOMIC SPINNER */
+/*
+		.loader {
+			transform: rotateZ(45deg);
+			perspective: 1000px;
+			border-radius: 50%;
+			width: 48px;
+			height: 48px;
+			color: #fff;
+		}
+			.loader:before,
+			.loader:after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: inherit;
+				height: inherit;
+				border-radius: 50%;
+				transform: rotateX(70deg);
+				animation: 1s spin linear infinite;
+			}
+			.loader:after {
+				color: #FF3D00;
+				transform: rotateY(70deg);
+				animation-delay: .4s;
+			}
+
+		@keyframes rotate {
+			0% {
+				transform: translate(-50%, -50%) rotateZ(0deg);
+			}
+			100% {
+				transform: translate(-50%, -50%) rotateZ(360deg);
+			}
+		}
+
+		@keyframes rotateccw {
+			0% {
+				transform: translate(-50%, -50%) rotate(0deg);
+			}
+			100% {
+				transform: translate(-50%, -50%) rotate(-360deg);
+			}
+		}
+
+		@keyframes spin {
+			0%,
+			100% {
+				box-shadow: .2em 0px 0 0px currentcolor;
+			}
+			12% {
+				box-shadow: .2em .2em 0 0 currentcolor;
+			}
+			25% {
+				box-shadow: 0 .2em 0 0px currentcolor;
+			}
+			37% {
+				box-shadow: -.2em .2em 0 0 currentcolor;
+			}
+			50% {
+				box-shadow: -.2em 0 0 0 currentcolor;
+			}
+			62% {
+				box-shadow: -.2em -.2em 0 0 currentcolor;
+			}
+			75% {
+				box-shadow: 0px -.2em 0 0 currentcolor;
+			}
+			87% {
+				box-shadow: .2em -.2em 0 0 currentcolor;
+			}
+		}
+	}
+*/
+
+
+/*  HTML An elemengt with class "loader"
+	<span class="loader"></span>
+*/
+
+
+/* 	===== BOUNCING ARROW ===== */
+
+/*
+.loader {
+	width: 15px;
+	height: 20px;
+	margin-left: 15px;
+	background: #FFF;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	animation: bump 0.4s ease-in infinite alternate;
+  }
+  .loader::after {
+	content: '';
+	box-sizing: border-box;
+	left: 50%;
+	top: 100%;
+	transform: translate(-50%, 0);
+	position: absolute;
+	border: 15px solid transparent;
+	border-top-color: #FFF;
+  }
+
+  @keyframes bump {
+	0% {
+	  transform: translate(-50%, 5px);
+	}
+	100% {
+	  transform: translate(-50%, -5px);
+	}
+  } */

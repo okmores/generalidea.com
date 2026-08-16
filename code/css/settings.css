@@ -1,0 +1,309 @@
+
+/* 	===== SETTINGS =====
+	SITE COLORS
+	IMAGE HANDLERS
+	TYPOGRAPHY
+	TYPOGRAPHY SHORTCUTS
+	HOME MENU */
+
+html {
+
+/*	SITE COLORS
+	Some values to be phased out
+	in favor of non-specific names. */
+
+	--bg-color-site: 	hsl(180, 2%, 12%);
+	--bg-color-bio: 	hsl(256, 33%, 15%);
+	--bg-color-dict: 	hsl(47, 26%, 7%);
+	--bg-color-3: 		hsl(221, 62%, 44%);
+	--bg-color-5: 		hsl(183, 63%, 35%);
+	--bg-color-dev: 	hsl(1, 41%, 31%);
+}
+
+/* ==== IMAGE HANDLERS ==== */
+
+/* OPTICAL FOCAL POINT
+	Modify object position inside a container;
+	use this to keep the focus or subject of
+	an image from being cropped when the
+	container shape changes. For finer control,
+	use JavaScript. */
+
+.focus-c		{object-position: center;} /* defauLt */
+.focus-l		{object-position: left;}
+.focus-r		{object-position: right;}
+.focus-t 	{object-position: top;}
+.focus-b		{object-position: bottom;}
+.focus-bl	{object-position: left bottom;}
+.focus-br	{object-position: right bottom;}
+.focus-tl	{object-position: left top;}
+.focus-tr	{object-position: right top;}
+
+/*  IMAGE FOCUS
+Makes images fill the container using the shortest
+dimension to calculate the image size. */
+
+.crop {height: 100%; width: 100%;}
+
+.cover {-o-object-fit: cover; object-fit: cover;}	
+
+/* ==== TYPOGRAPHY ==== */
+/* opsz = font is optically sized (a variable font); 
+			 default = 'auto'; try 'none' if retina and thin text */
+
+:root{
+	--font-sans-serif: 'Jost', sans-serif;
+	--font-serif: 'Bodoni Moda', serif;
+	--font-mono: 'Fira Code', courier, monospace;
+	--font-newspaper: 'Newsreader', 'Times New Roman', serif;
+	--font-optical-sizing: auto;
+	--opsz-threshold-px: 72;
+	--touch-value: 0;
+	--viewport-size-factor: calc((3svw + 3svh) * 2);
+	--viewport-area-factor: calc((1svw * 1svh) / 2);
+	}
+
+@media screen and (hover: none) and (pointer: coarse) and (max-width: 932px) and (orientation: portrait) {
+	:root {--opsz-threshold-px: 72;}}
+
+@media screen and (hover: none) and (pointer: coarse) and (max-width: 932px) and (orientation: landscape) {
+	:root {--opsz-threshold-px: 72;}}
+
+html[data-opsz="none"] {--font-optical-sizing: none;}
+html[data-opsz="auto"] {--font-optical-sizing: auto;}
+
+html[data-touch="true"] {--touch-value: 1;}
+
+html {
+	font-family: var(--font-serif);
+	color: var(--body-color);
+	scroll-behavior: smooth;
+	quotes: auto;
+	background-color: var(--bg-color-site);
+	font-optical-sizing: var(--font-optical-sizing);
+
+	--headline-color: 	hsl(0, 0%, 100%);
+	--body-color: 			hsl(0, 0%, 100%);
+	--body-color-gray: 	hsl(0, 0%, 50%);
+	--subhead-color: 		hsl(0, 0%, 15%);
+	--breaker-color: 		hsl(0, 0%, 20%);
+	--menu-text-color: 	hsl(0, 0%, 100%);
+	/* --player-btn-color: 	hsl(0, 0%, 80%); */
+	--code-color-dk: 		hsl(0, 0%, 10%);
+	--code-color-lt: 		hsl(0, 0%, 90%);
+	--font-color-wht: 	hsl(0, 0%, 100%);
+	--font-color-blk: 	hsl(0, 0%, 0%);
+
+	--dictionary-main:	hsl(0, 0%, 20%);
+	--dictionary-accent:	hsl(0, 0%, 10%);
+	--dictionary-font-factor: calc((1svw + 1svh) / 2.2);
+
+	--link-color:				#20667b;
+	--test-color: 				rgb(32, 208, 32);
+	--accent-color-red: 		hsl(0, 100%, 40%);
+	--accent-color-yellow: 	hsl(56, 85%, 48%);
+
+	--legend-color-lt: 	hsl(0, 0%, 80%);
+	--legend-color-dk: 	hsl(0, 0%, 14%);
+
+}
+
+h1	{
+	text-align: center;
+	line-height: 80%;
+	letter-spacing: -0.05ch;
+	word-spacing: -0.1ch;
+	font-weight: 500;
+	color: var(--headline-color);
+	}
+
+/*	SUBHEAD */
+
+h2	{
+	padding: 2rem 0 1rem 0;
+	letter-spacing: -0.03ch;
+	word-spacing: -0.1ch;
+	line-height: 1.6rem;
+	font-size: 1.75rem;
+	font-weight: 300;
+	font-style: italic;
+	}
+
+/*	 BREAKER */
+
+h3	{
+	font-family: var(--font-sans-serif);
+	font-size: 1rem;
+	padding-top: 1em;
+	letter-spacing: 0.3ch;
+	word-spacing: -0.07ch;
+	line-height: 1rem;
+	font-weight: 200;
+	}
+
+p	{
+	font-kerning: auto;
+	letter-spacing: -0.025ch; 
+	word-spacing: -0.07ch;
+	}
+
+p > a {
+	text-decoration-style: solid;
+	text-underline-offset: 2px;
+	}
+
+p > a:hover { color: var(--link-color) }
+
+a	{ color: var(--body-color); text-decoration: none; }
+
+i	{ font-style: italic }
+
+legend {
+	font-family: var(--font-sans-serif);
+	font-weight: 500;
+	margin: 4px;
+	color: var(--legend-color-dk);
+	font-size: 0.75rem;
+	}
+
+legend.card {
+	font-size: 0.5rem
+	}
+
+.inset {padding-inline: 10%;}
+
+.ellipsis {text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+
+.fineprint {
+	font-family: var(--font-sans-serif);
+	color: var(--body-color-gray);
+	font-size: min(.7rem, 90vw);
+	font-weight:400;
+	text-transform: uppercase;
+	letter-spacing: 0.15rem;
+	}
+
+.rule {
+	background-position: center;
+	background-image: url(media/images/chrome/rule1.png);
+	background-repeat: no-repeat;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	height: 8px;
+	width: auto;
+	}
+
+hr	{
+	margin-top: 1rem;
+	margin-left: 35%;
+	margin-right: 35%;
+	margin-bottom: 1rem;
+	color: var(--body-color);
+	}
+
+/* ===== TYPOGRAPHY SHIMS ===== */
+
+.FR 	{ text-align: right; }
+.FL 	{ text-align: left; }
+.CC	{ text-align: center; }
+.UU	{ text-transform: uppercase; }
+.IT	{ font-style: italic; }
+
+/* 	FONT WEIGHT */
+
+.light { font-weight: 400; }
+.medium { font-weight: 500; }
+.bold { font-weight: 800; }
+
+/* KERN */
+	
+.K2	{ letter-spacing: 0.10ch; } 
+.K1	{ letter-spacing: 0.05ch; } 
+.K-1	{ letter-spacing: -.1ch; }
+.K-2	{ letter-spacing: -.2ch; }
+.K-3	{ letter-spacing: -.3ch; }
+.K-4	{ letter-spacing: -.4ch; }
+	
+/* INDENT */
+
+.IN0	{text-indent: 0rem; }
+.IN1	{text-indent: 1rem; }
+.IN2	{text-indent: 2rem; }
+.IN3	{text-indent: 3rem; }
+
+/* MARGIN */
+
+.ML40	{ margin-left: 40px; }
+.ML35	{ margin-left: 35px; }
+
+/* PADDING */
+
+.PL1	{ padding-left: 1rem;}
+.PL2	{ padding-left: 2rem;}
+.PL3	{ padding-left: 3rem;}
+.PL4	{ padding-left: 4rem;}
+.PT1	{ padding-top: 1rem;}
+.PB10	{ padding-bottom: 10px;}
+.P10	{ padding: 10px;}
+.P20	{ padding: 20px;}
+.P30	{ padding: 30px;}
+	
+/* GREYSCALE */
+
+.G0		{ color: #000000; }
+.G1		{ color: #222222; }
+.G2 		{ color: #444444; }
+.G3		{ color: #666666; }
+.G4		{ color: #888888; }
+.G5		{ color: #aaaaaa; }
+.G6		{ color: #cccccc; }
+.G7		{ color: #eeeeee; }
+.G8		{ color: #ffffff; }
+
+.LO		{ color: #222222; }
+.HI		{ color: #dddddd; }
+
+.TEST	{color: red}
+	
+/* 	FONT SIZE (NON-RESPONSIVE)
+	Most fonts are assingned dynamic
+	sizes to grow and shrink with the viewport
+	so that kerning and other adjustments
+	remain consistent.
+	TBD - Convert these into class definitions */
+
+body {
+	--fs-96: 6.0rem;	/* 96px */
+	--fs-48: 3.0rem;	/* 48px */
+	--fs-40: 2.5rem;
+	--fs-36: 2.25rem;
+	--fs-32: 2rem;      /* 32px */
+	--fs-28: 1.75rem;
+	--fs-24: 1.5rem;
+	--fs-20: 1.25rem;
+	--fs-16: 1.0rem;	/* 16px */
+	--fs-12: 0.875rem;
+	--fs-10: 0.75rem;
+	--fs-9:  0.625rem;
+	--fs-8:	 0.5rem;	/* 8px */
+	}
+
+/* 	FONT WEIGHT */
+
+	.fw-1 {font-weight: 100;}	/* thin */
+	.fw-2 {font-weight: 200;}
+	.fw-3 {font-weight: 300;}
+	.fw-4 {font-weight: 400;}
+	.fw-5 {font-weight: 500;}	/* medium */
+	.fw-6 {font-weight: 600;}
+	.fw-7 {font-weight: 700;}
+	.fw-8 {font-weight: 800;}
+	.fw-9 {font-weight: 900;}	/* heavy */
+	
+
+/* 	DYNAMIC HYPHENS */
+
+/* &shy; soft hyphen character.
+Indicates a potential place to insert a
+hyphen when hyphens: manual is specified. */
+

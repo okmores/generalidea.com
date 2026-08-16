@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "code"
+		},
+		{
+			"path": "media"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.fontSize": 12,
+		"liveServer.settings.multiRootWorkspaceName": "03",
+		"scm.inputMaxLineCount": 10,
+		"scm.inputMinLineCount": 1,
+	}
+}
