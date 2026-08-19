@@ -2,17 +2,17 @@
 /* --- MAIN MENU VARS --- */
 
 html{
-	--main-menu-icon-size: 	54px;   /* Also header height */
+	--main-menu-icon-size: 	40px;   /* Also header height */
 	--main-menu-icon-padding-side: 2px;
 	--main-menu-icon-padding-top: 4px;
-	--main-menu-icon-scale: 80%;
-	--main-menu-icon-bright: 1.45;
+	--main-menu-icon-scale: 90%;
+	--main-menu-icon-bright: 1.5;
 	--main-menu-icon-bright-hover: 2;
-	--main-menu-icon-spacing: -8px;
+	--main-menu-icon-spacing: -9px;
 	--main-menu-width: calc(
 		var(--main-menu-icon-size) +
 		var(--main-menu-icon-padding-side) * 2);
-	--main-menu-bg-color: hsl(0, 98%, 32%);
+	--main-menu-bg-color: hsl(0, 100%, 35%);
 	--backdrop-blur: blur(5px);
 	--touch: false;
 }
