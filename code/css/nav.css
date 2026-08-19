@@ -5,10 +5,10 @@ html{
 	--main-menu-icon-size: 	40px;   /* Also header height */
 	--main-menu-icon-padding-side: 2px;
 	--main-menu-icon-padding-top: 4px;
-	--main-menu-icon-scale: 90%;
-	--main-menu-icon-bright: 1.5;
+	--main-menu-icon-scale: 80%;
+	--main-menu-icon-bright: 1.6;
 	--main-menu-icon-bright-hover: 2;
-	--main-menu-icon-spacing: -9px;
+	--main-menu-icon-spacing: -4px;
 	--main-menu-width: calc(
 		var(--main-menu-icon-size) +
 		var(--main-menu-icon-padding-side) * 2);
@@ -92,7 +92,7 @@ html{
 	#main-menu li::after {
 			content: attr(data-label);
 			position: relative;
-			top: -1rem;
+			top: -.6rem;
 			color: rgb(255, 255, 255);
 			opacity: var(--touch-value);
 			transition: 350ms;}
@@ -117,8 +117,6 @@ html{
 #main-menu.open {transform: translateX(0px);}
 #main-menu.closed {transform: translateX(calc(-100% - var(--safe-inline)));}
 /* #main-menu.closed {background-color: rgba(182, 48, 48, 0.272);} */
-
-/* .menu-items{position: relative; margin-top: -0em;} */
 
 /* ---- DEV PANEL ---- */
 
