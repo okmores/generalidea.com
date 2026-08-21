@@ -8,9 +8,7 @@
 
 html {
 
-/*	SITE COLORS
-	Some values to be phased out
-	in favor of non-specific names. */
+/* SITE COLORS */
 
 	--bg-color-site: 	hsl(180, 2%, 12%);
 	--bg-color-bio: 	hsl(256, 33%, 15%);
@@ -18,12 +16,34 @@ html {
 	--bg-color-3: 		hsl(221, 62%, 44%);
 	--bg-color-5: 		hsl(183, 63%, 35%);
 	--bg-color-dev: 	hsl(1, 41%, 31%);
+
+/* --- MAIN MENU VARS --- */
+
+	--main-menu-font-size: 0.6em;
+	--main-menu-font-weight: 600;
+	--main-menu-icon-size: 45px;   /* Also header height */
+	--main-menu-icon-padding-side: 2px;
+	--main-menu-icon-padding-top: 4px;
+	--main-menu-icon-scale: 80%;
+	--main-menu-icon-drop-shadow:  drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.20));
+	--main-menu-icon-light: brightness(1.65) var(--main-menu-icon-drop-shadow);
+	--main-menu-icon-light-hover: brightness(2) var(--main-menu-icon-drop-shadow);
+	--main-menu-icon-spacing: -4px;
+	--main-menu-width: calc(
+		var(--main-menu-icon-size) +
+		var(--main-menu-icon-padding-side) * 2);
+	--main-menu-bg-color: hsl(0, 98%, 35%);
+	--backdrop-blur: blur(5px);
+
+	/* --- TOUCH SETTINGS --- */
+	
+	--touch: false;
 }
 
-/* ==== IMAGE HANDLERS ==== */
+/* --- IMAGE HANDLERS --- */
 
 /* OPTICAL FOCAL POINT
-	Modify object position inside a container;
+	Modify image position inside a container;
 	use this to keep the focus or subject of
 	an image from being cropped when the
 	container shape changes. For finer control,
@@ -44,13 +64,12 @@ Makes images fill the container using the shortest
 dimension to calculate the image size. */
 
 .crop {height: 100%; width: 100%;}
-
 .cover {-o-object-fit: cover; object-fit: cover;}	
 
 /* ==== TYPOGRAPHY ==== */
+
 /* opsz = font is optically sized (a variable font); 
 			 default = 'auto'; try 'none' if retina and thin text */
-
 :root{
 	--font-sans-serif: 'Jost', sans-serif;
 	--font-serif: 'Bodoni Moda', serif;
@@ -82,8 +101,8 @@ html {
 	background-color: var(--bg-color-site);
 	font-optical-sizing: var(--font-optical-sizing);
 
-	--headline-color: 	hsl(0, 0%, 100%);
-	--body-color: 			hsl(0, 0%, 100%);
+	--headline-color: 	hsl(0, 0%, 90%);
+	--body-color: 			hsl(0, 0%, 90%);
 	--body-color-gray: 	hsl(0, 0%, 50%);
 	--subhead-color: 		hsl(0, 0%, 15%);
 	--breaker-color: 		hsl(0, 0%, 20%);

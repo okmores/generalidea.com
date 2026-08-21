@@ -1,35 +1,4 @@
 
-/* --- MAIN MENU VARS --- */
-
-html{
-	--main-menu-icon-size: 	40px;   /* Also header height */
-	--main-menu-icon-padding-side: 2px;
-	--main-menu-icon-padding-top: 4px;
-	--main-menu-icon-scale: 80%;
-	--main-menu-icon-bright: 1.6;
-	--main-menu-icon-bright-hover: 2;
-	--main-menu-icon-spacing: -4px;
-	--main-menu-width: calc(
-		var(--main-menu-icon-size) +
-		var(--main-menu-icon-padding-side) * 2);
-	--main-menu-bg-color: hsl(0, 100%, 35%);
-	--backdrop-blur: blur(5px);
-	--touch: false;
-}
-
-#main-menu-scaler {
-	/* position: fixed; */
-	left: 0;
-	top: 0;
-	width: 20vw;
-	/* width: var(--main-menu-width); */
-	height: 100svh;
-	/* overflow: hidden; */
-	z-index: 50;
-	pointer-events: none;
-	background-color: rgba(55, 41, 213, 0);
-}
-
 /* --- HOME BUTTON --- */
 
 #home-btn-container {
@@ -46,7 +15,7 @@ html{
 #home-btn {
 	z-index: 100;
 	position: absolute;
-	filter: brightness(var(--main-menu-icon-bright));
+	filter: var(--main-menu-icon-light);
 	color: var(--body-color);
 	display: block;
 	width: var(--main-menu-icon-size);
@@ -58,9 +27,29 @@ html{
 
 #home-btn-container #home-btn:hover {
 	cursor: pointer;
-	filter: brightness(var(--main-menu-icon-bright-hover));}
+	filter: var(--main-menu-icon-light-hover);}
+
+
+	#home-btn-container::after {
+		content: attr(data-label);
+		position: absolute;
+		top: calc(100% - .6rem);
+		left: 0;
+		width: 100%;
+		text-align: center;
+		color: var(--body-color);
+		opacity: var(--touch-value);  /* 0 for non-touch, 1 for touch */
+		font-family: var(--font-sans-serif);
+		font-size: var(--main-menu-font-size);
+		font-weight: var(--main-menu-font-weight);
+		text-transform: uppercase;
+		transition: 300ms;}
+
+	#home-btn-container:hover::after {
+		opacity: 1}
 
 /* --- MAIN MENU --- */
+
 #main-menu {
 	position: fixed;
 	text-align: center;
@@ -70,8 +59,8 @@ html{
 	height: 100svh;
 	width: var(--main-menu-width);
 	font-family: var(--font-sans-serif);
-	font-size: 0.7em;
-	font-weight: 500;
+	font-size: 0.6em;
+	font-weight: 900;
 	/* background-color: var(--main-menu-color); */
 	background-color: var(--main-menu-bg-color);
 	transform: translateX(0px);
@@ -81,8 +70,8 @@ html{
 #main-menu li {
 			text-transform: uppercase;
 			height: var(--main-menu-icon-size);
-			letter-spacing: 0.1em;
-			font-weight: 500;
+			letter-spacing: 0.05em;
+			font-weight: var(--main-menu-font-weight);
 			margin-top: var(--main-menu-icon-spacing);}
 
 	#main-menu ul {
@@ -94,29 +83,25 @@ html{
 			position: relative;
 			top: -.6rem;
 			color: rgb(255, 255, 255);
-			opacity: var(--touch-value);
-			transition: 350ms;}
+			opacity: var(--touch-value);  /* 0 for non-touch, 1 for touch */
+			transition: 300ms;}
 
 	#main-menu li:hover::after {
 			opacity: 1}
 
 	#main-menu img {
 		height: var(--main-menu-icon-size);
-		/* display: inline-block; */
-		filter: brightness(1.4);
-		rotate: y 180deg; /* FLIP ICONS TO FACE INWARD */
+		filter: var(--main-menu-icon-light);
+		rotate: y 180deg; /* flip icons to face inward */
 		scale: var(--main-menu-icon-scale);
-		margin: 0px;  /* CENTER ITEM   */
-		inset: 0px; } /* CENTER ITEM   */
+		 }
 
 	#main-menu img:hover {
 		cursor: pointer;
-		filter: brightness(2);
-}
+		filter: var(--main-menu-icon-light-hover);}
 
 #main-menu.open {transform: translateX(0px);}
 #main-menu.closed {transform: translateX(calc(-100% - var(--safe-inline)));}
-/* #main-menu.closed {background-color: rgba(182, 48, 48, 0.272);} */
 
 /* ---- DEV PANEL ---- */
 

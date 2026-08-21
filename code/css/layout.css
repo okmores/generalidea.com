@@ -103,6 +103,7 @@ header {
 
 #dictionary .dictionary-container {
 	background-color: hsl(39, 19%, 77%);
+	border-radius: 10px;
 	grid-column: 2 / 3;
 	grid-row: 2 / 3;	
 	padding: 2ch;
