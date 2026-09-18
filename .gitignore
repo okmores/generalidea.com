@@ -41,4 +41,8 @@ old/
 # Generic junk
 *.bak
 
-# Old image files
+# Workshop files
+*code/workshop/
+**/code/workshop/
+**/code/workshop/*
+
