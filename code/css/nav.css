@@ -29,7 +29,7 @@
 	cursor: pointer;
 	filter: var(--main-menu-icon-light-hover);}
 
-
+/* 
 	#home-btn-container::after {
 		content: attr(data-label);
 		position: absolute;
@@ -38,7 +38,7 @@
 		width: 100%;
 		text-align: center;
 		color: var(--body-color);
-		opacity: var(--touch-value);  /* 0 for non-touch, 1 for touch */
+		opacity: var(--touch-value); 
 		font-family: var(--font-sans-serif);
 		font-size: var(--main-menu-font-size);
 		font-weight: var(--main-menu-font-weight);
@@ -46,7 +46,7 @@
 		transition: 300ms;}
 
 	#home-btn-container:hover::after {
-		opacity: 1}
+		opacity: 1} */
 
 /* --- MAIN MENU --- */
 
