@@ -63,8 +63,3 @@ var	menuArray =   [],
 		];
 
 /* ==== IMAGE GRID ==== */		
-
-var 	onCall = 	[],
-		pLAYSTACK = 	[],
-		onHold =  	[],
-		cells =	 	[];

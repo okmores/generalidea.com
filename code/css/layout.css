@@ -121,6 +121,7 @@ header {
 	min-height: 0;
 	hyphens: auto;
 	margin: auto;
+	touch-action: none;
 	}
 
 	/* NOTE: &shy; (soft hyphen) character: Indicates a potential place 
