@@ -1,7 +1,4 @@
-/* global clearTimeout, setTimeout, document */
 
-
-// ...existing code...
 
 //	===== SCROLL TO =====  //
 
@@ -118,25 +115,6 @@ const navTouch = (event) => {
 	console.log(`navTouch(): ${source}: ${item}`);
 	btnHit(source, item);};
 
-// ==== CLICK HANDLERS ===== //
-
-// const navClick = (event) => {
-// 	event.preventDefault();
-// 	const link =   event.currentTarget;
-// 	const source = link.dataset.source;
-// 	const item =   link.dataset.name;
-// 	const state = 	link.dataset.state;
-// 	console.log(`navClick(): ${source}: ${item}`);
-// 	btnHit(source, item)};
-
-// const devClick = (event) => {
-// 	event.preventDefault();
-// 	const link = event.currentTarget;
-// 	const source = link.dataset.source;
-// 	const item = link.dataset.name;
-// 	const state = 	link.dataset.state;
-// 	console.log(`devClick(): ${source}: ${item}`);
-// 	btnHit(source, item);};
 
 // ===== EVENT LISTENERS ===== //
 
@@ -209,11 +187,6 @@ function setEvents() {
 		});
 	});
 
-	// --- MAIN MENU EVENT ---
-	// mainMenu.querySelectorAll('img').forEach(link => {
-	// 	// link.addEventListener('touchstart', navTouch);
-	// 	link.addEventListener('click', navClick);
-	// });
 	
 	// ===== DEV PANEL ===== //
 	dragMe('dev-panel');
