@@ -1,0 +1,54 @@
+
+
+/*	Frame 9 from the original Flash script.  WILL NOT RUN in javascript.
+	(Includes frames 10 and 11 below.  These were probably on different frames
+	because of some kind of timing issue. )    */ 
+
+	Reset = false ;
+		
+	if (Standalone) { 						//	not running as a level in another swf
+		eek("ImageGrid(): Ready; running as _level0");
+		UnPoof() ; 
+	}
+	
+	//UnPoof() ;							
+		
+	eek ("ImageGrid(): ready");
+	js("eek", "ImageGrid ready");
+
+	_level0.play() ;
+	
+
+
+	
+/*	Frame 10 from the original Flash script.  WILL NOT RUN in javascript.	
+
+	if (ShowHatBtns) { 
+		this.HatBtnPad._visible = true; 
+	} else {
+		this.HatBtnPad._visible = false; 
+	}
+	
+	if (!Debug) { stop() ; }	
+
+
+
+/*	Frame 11 from the original Flash script.  WILL NOT RUN in javascript.
+
+	var Player = {
+		
+		GetMovie:	function(movie){
+						eek ("GetMovie: " + movie)
+						Flicker.GetMovie (movie) ;
+					},
+		
+		Close	: 	function() {
+						eek ("Player.Close event disabled (frame12)")
+						js ("eek", "ImageGrid.Player.Close() disabled (frame12)");
+						//UnPoof()
+						//BtnHit ( null, CurrentClass) 
+					}
+	}
+	
+
+	

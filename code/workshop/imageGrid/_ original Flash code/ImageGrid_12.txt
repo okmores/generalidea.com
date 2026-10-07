@@ -1,0 +1,51 @@
+/*	Frame 12 from the original Flash script.  WILL NOT RUN in javascript.	
+	
+	//eek ("ImageGrid Pos = " + this._x + "," + this._y);
+	
+	DevPanel._visible = false;
+	DevBtns._visible = true ;
+	DevPanel.swapDepths(999);
+	
+	function ToggleDevBtns () {
+		//var btns = Object(this).DevBtns;
+		var btns = this.DevBtns;
+
+		eek ("ImageGrid.ToggleDevBtns: " + ImageGrid );
+
+		if ( btns._visible == false) {
+			btns._visible = true ;
+		} else {
+			btns._visible = false ;
+			DevPanel._visible = false ;
+			HatBtnPad._visible = false ;
+		}
+	}
+			
+	function FlipConsole () {
+		if ( DevPanel._visible == false) {
+			DevPanel._visible = true ;
+		} else {
+			DevPanel._visible = false ;
+		}
+	}
+	
+	function ToggleHatBtnPad () {
+		if ( HatBtnPad._visible == false) {
+			HatBtnPad._visible = true ;
+		} else {
+			HatBtnPad._visible = false ;
+		}
+	}
+
+	function ToggleShowBtnPad () {
+		if ( ShowBtnPad._visible == false) {
+			ShowBtnPad._visible = true ;
+		} else {
+			ShowBtnPad._visible = false ;
+		}
+	}
+	
+	
+	
+	
+	stop();

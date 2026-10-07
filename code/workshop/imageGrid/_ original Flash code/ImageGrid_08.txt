@@ -1,0 +1,128 @@
+/*	Frame 8 from the original Flash script.  WILL NOT RUN in javascript.	
+
+/*	***************
+	MC() 
+	Master of Ceremonies.  A contoller for ImageGrid using the fallthrough behavior of the switch statement.  
+	Organized in small bits to allow optional ways to handle individual steps.  It would be nice to target 
+	and replace a single card.  Right now, though, it's all hardwired to fill the screen by rows and columns.  */
+	
+	function MC(Step:String) {
+			switch (Step) {
+				case "ShowTime"	:
+					if (Quorum == false) {
+						js ("eek", "MC(): Not enough cards to fill the Grid" ) ;
+						break ;
+					}
+					if (!ShowTime) {
+						RunShow() ;
+						break ;
+					}
+					
+				case "NewCard" :										
+					if (!AutoLoad) {									//	If NOT AutoLoading, ask for a new card in Single mode
+						NewCard() ;
+						break ;
+					}
+					break ;												//	If AutoLoading (looping), bail out; it will happen automatically
+					
+				case "MakeCard" :										//	}	Only MC() itself should use this shortcut; 
+					if (!CardName) {									//	}	Use MC("NewCard") and set params properly first
+						NewCard() ;									
+						break ;
+					}
+					CurrentCard = CardName ; 							//	CardPrefix + CardNumber ;
+					Progress = CardName + ": " ;						//	Progress is a string we'll trace to the console later
+					
+				case "MediaPicker" :									//	Pick something to attach to the card; currently a random item from DrawStack
+					if (!MediaFile) {
+						MediaPicker("Random" ) ;
+						break ;
+					}
+					Progress += "  " + MediaClass + "  " + MediaFile ;
+
+				case "CardSpotter" :									//	Get a grid position for the new card; 
+					if (!CardSpotted) {									//	Note: the new card does not yet exist
+						CardSpotter () ;
+						break ;
+					}
+					Progress = "Cell: " + CellNumber + "\tGrid: " + Column + "," + Row + "  "+ Progress ;
+					
+				case "FetchPrototype" :									//	Load the Prototype card
+					if (!ProtoCardLoaded) {						
+						FetchPrototype () ;
+						break ;
+					} 
+					
+				case "FetchFile" :										//	Fetch MediaFile and load it into ProtoCard;  CurrentCard = the ProtoCard we just made
+					if (!MediaFileLoaded) {						
+						FetchFile () ;
+						break ;
+					}
+					
+				case "Initialize" :										//	Apply the card position and other data
+					if (!CardInitialized) {
+						InitializeCard () ;
+						break ;
+					}
+					
+				case "PlayCard" :
+					if (!CurrentCard.Ready) {
+						CurrentCard.play() ;							//	ProtoCard instance playhead advances to ready frame
+						break ;
+					}
+					
+											//	 CARD APPEARS ON STAGE	// 
+					
+				case "SetDepth" :										//	Called by ProtoCard instance after playing (appearing)
+					OldCard = undefined ;
+					OldCard = this.getInstanceAtDepth (CellNumber) ;	//	identify the old card to be replaced by the new card
+					if (OldCard) {
+						OldCard.removeMovieClip() ;						//	remove the old ProtoCard instance
+						DiscardStack.push(OnStage[CellNumber]) ;		//	add the outgoing media record to the DiscardStack array
+					}
+					
+					CurrentCard.swapDepths(CellNumber);					//	Having accomplished the above, move this card to the final depth (the CellNumber)
+					CurrentCard.Depth = CurrentCard.getDepth () ; 		//	just to be thorough, update the card info about itself
+					OnStage[CellNumber] = CurrentMedia ;				//	update the OnStage array		
+
+				case "RecycleCards" :									
+					if (DrawStack.length == 0) { 						//	If the DrawStack is empty, recycle used cards
+						//eek ("MC(): Nothing in DrawStack") ;
+						RecycleCards () ;
+						break ;
+					}
+				
+				case "TidyUp" :
+					
+					eek ("  ~  " + Progress) ;						//	Trace what just happened
+					
+					CurrentCard.CardData = CurrentMedia ;				//	HUH?  Isn't this already set?
+					CardName = undefined ;								//	Set for next card
+
+					if (FlashMode) {	
+						ReFlash() ;										//	Keep Flashing?
+					}
+		
+					if (Grid.length == 0 ) {							//	If the list is empty, the grid is full 
+						SetCells() ;									//	re-generate the list
+					}
+					
+					if (Paused) {
+						//eek ("Paused" ) ;
+						break ;
+					} else if (AutoLoad || FlashMode) {
+						MC ("MakeCard") ;
+						break
+					} else {
+						clearTimeout (BufferTime) ;
+						break;
+					}
+					
+					break ; 											//	All done!
+					
+				default :
+				
+					eek ("MC():  !!  bailed out !!") ;
+			}
+		
+	}
