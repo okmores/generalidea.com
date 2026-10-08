@@ -9,6 +9,14 @@ vscode/
 *.swp
 *.tmp
 
+# Site planning an temp files
+workshop/
+**/workshop/
+code/workshop/
+**/code/workshop/
+code/txt
+**/code/txt
+
 # Node / package manager output
 node_modules/
 **/node_modules/
