@@ -1,0 +1,232 @@
+/*	Frame 3 from the original Flash script.  WILL NOT RUN in javascript.
+
+/*	********************
+	CARDS
+	Methods for dealing with cards.
+	
+		NewCard()			//	Starts the process of building a new card
+		NewCardIni()		//	WIP - sort of a listener and extra step to deal with Throttle()
+		CardSpotter()		//	Figures out where to put the card on the stage
+		RecycleCards()		//	Moves discarded cards (removed from the stage) back to the DrawStack
+		SetQuorum()			//	Are there enough cards to fill the Grid?
+		PokeCard()			//	Traces info about the CurrentCard */
+
+
+/*	*******************
+	NEWCARD()
+	Initiates a new Card.  Mainly a gatekeeper; switches MC() into or out of AutoLoad mode, which 
+	controls whether a single new card is manufactured or cards are created repeatedly in a an endless loop.
+	If MC() is looping, it will skip this node and call MakeCard() directly.  NewCard() is used to enter  
+	or interrupt the world of MC() from the outside.  
+	
+	DON'T call NewCard() directly.  Use MC("NewCard") instead.*/
+
+	function NewCard() {
+		
+		if (AutoState == "Multiple") {
+			AutoLoad = true ;
+		} else {
+			AutoLoad = false ;
+		}
+		
+		MakeCard() ;
+	}
+
+
+/*	********************
+	MakeCARD()
+	Sets CurrentCard variables for a new instance of ProtoCard, gives it an instance name
+	and calls back to MC().  Includes a routine to "FlashMode" cards until FlashCards = 0.
+	FlashMode is re-evaluated at the end of each loop of MC().
+	
+	Tricky bits:	In setTimeout() below, don't use ()s with the function name NewCardBuffer; 
+					the second arg, DrawBuffer, is the length of delay, not an argument for NewCardBuffer().*/
+	
+	function MakeCard () {
+
+		if (FlashMode) {
+			t = 30 ;	
+			--FlashCards ;
+		} else {
+			t = random (Buffer) ;										//	Delay before drawing a new card; more info at var declaration
+		}
+		var BufferTime:Number = setTimeout (NewCardIni, t ) ;			//  See tricky bits above
+	}
+	
+	//	listener:
+	
+	function NewCardIni() {
+	
+		MediaFile = undefined ;							//	Media file to import
+		MediaClass = undefined ;						//	Class of media content; "Film", "Photo", etc.
+		CardSpotted = false ;							//	Position on grid is determined
+		MediaFileLoaded = false ;			
+		ProtoCardLoaded = false ;
+		CardInitialized = false ;
+		Link = undefined ;	
+
+		CardNumber ++ ;
+		CardName = CardPrefix + CardNumber ;			//	Pick an object name for the card object
+				
+		MC ( "MakeCard" ) ;								//	Callback after a pause (if any)
+	}
+
+
+/*	********************
+	CARDSPOTTER() 
+	Derives cell numbers and pixel coordinates.  Ultimately could generate coordinates using a  
+	variety of schemes, creating different animation effects, but initially there is one option: 
+	
+		"Random" -- picks a random cell from the available grid
+		
+	Position 0,0 is at the top left.  (but see Tricky Bits, below)
+	
+	Returns column and row numbers on a grid as well as pixel coordinates (er, actually, 
+	it sets some vars and calls back to MC() with "CardSpotter" as the 1st parameter.)  
+	
+	Tricky Bits:	There is an inverter (i = (CellCount -1) - i ;) down there that 
+					reverses the placement of cards so 0,0 is at the bottom right; i.e., grid
+					position 0, and the 0 depth card, is at the bottom rather than the top.
+					Useful if the cards overlap.  */
+	
+	function CardSpotter (Schema:String) {
+		
+		var c:Number = Columns ;
+		var r:Number = Rows ;
+
+		if (!Schema) { Schema = DefaultSchema ; }
+	
+		switch (Schema) {
+			
+			case "ByRows" :
+				//  fall through ;
+			case "Random" :
+				var n:Number = random (Grid.length)  ;		//	pick a random cell from remaining grid cells
+				var i:Number = Grid [n] ;					//	The cell we'll use for this card, a number from 0 to Grid.length
+				Grid.splice (n, 1);							//	delete that cell from the list of available cells
+				break ;
+				
+			default :
+				eek ("CardSpotter():  !!  unknown schema  !! " ) ; 
+				break ;
+		}
+		
+		CellNumber = i ;									//	same as the (eventual) depth of the card on the stage
+		i = (CellCount -1) - i ;							//	Invert so depth 0 is at the bottom right; someday I'll make every new card be on top
+		
+		Row = Math.floor ( ( i ) / c ) ;
+		Column = i - ( Row * c ) ;
+
+		PosX = (Column * CellW) + DeltaX ;					//	}	DeltaX and DeltaY are used to Repo the entire Grid;
+		PosY = (Row * CellH) + DeltaY ;						//	}	usually just recenters the grid in the swf if Registration == "Center"
+		
+		CardSpotted = true ;
+		
+		MC ( "CardSpotter") ;
+	   
+	}
+
+	
+/*	********************
+	INITIALIZECARD()
+	Places the ProtoCard on the grid according to column and row coordinates figured out by CardSpotter. 
+	Tip: This is a separate step because when CardSpotter runs, there is no card to place.  */
+	
+	function InitializeCard () {	
+		CurrentCard._x = PosX ; 
+		CurrentCard._y = PosY ;
+		CurrentCard._xscale = CardScale ;
+		CurrentCard._yscale = CardScale ;
+		CardInitialized = true ;
+		MC ("Initialize") ;
+	}
+
+	
+/*	**********
+	RECYCLECARDS() 
+	Move records from the DiscardStack back to the DrawStack.  */
+	
+	function RecycleCards () {
+		ClassAssassin () ;									//	root out cards tagged to be Omitted
+		if (DiscardStack.length > 0 ) { 					
+			DrawStack = DrawStack.concat(DiscardStack) ;	//	Copy the DiscardStack to the DrawStack
+			eek ("RecycleCards(): Recycling DiscardStack with " + DiscardStack.length + " items" ) ;
+			DiscardStack.length = 0 ;						//	Delete all DiscardStack records
+			MC ("RecycleCards" ) ;							//	return to MC() 
+		} else {											//	But bail out if there are not enough cards to fill the grid
+			eek ("RecycleCards(): No cards to recycle.") ;
+		}
+	}
+	
+		
+/*	*************
+	POKECARD()
+	Testng utility   */
+
+	function PokeCard () {
+		eek ("@ ProtoCard Name......... " + CurrentCard._name ) ;
+		eek ("@ ProtoCard Depth........ " + CurrentCard.getDepth() ) ;
+		eek ("@ ProtoCard Cell......... " + CurrentCard.CellNumber ) ;
+		eek ("@ ProtoCard Code......... " + CurrentCard.CardData.Code ) ;
+		eek ("@ ProtoCard MediaFile.... " + CurrentCard.CardData.Filename ) ;
+	}
+	
+	
+/*	*************
+	SETQUORUM()
+	Are there enough cards to play?  Is this as clunky as it looks?  
+	Yes. But it works.  */
+	
+	function SetQuorum() {
+		eek ("  SetQuorum(): !!  ERROR  !!  SetQuorum is obsolete  !!") ;
+		eek ("  SetQuorum(): !!  ERROR  !!  SetQuorum is obsolete  !!") ;
+		eek ("  SetQuorum(): !!  ERROR  !!  SetQuorum is obsolete  !!") ;
+		eek ("  SetQuorum(): !!  ERROR  !!  SetQuorum is obsolete  !!") ;
+		
+		var t = 0,
+			r = false;
+		
+		for (i in ActiveClassesArray){
+			t += ActiveClassesArray[i][1];
+			}
+		
+		ActiveCards = t ;
+		
+		if (ActiveCards > CellCount) { 
+			Quorum = true ;
+		} else {
+			eek ("  SetQuorum(): !!  ERROR  !!  examining " + t + " cards  !!") ;
+			Quorum = false ;
+		}
+		
+		return r;
+	}
+
+	var Quorum = function() {
+		var t = 0;
+
+		for (i in ActiveClassesArray){
+				t += ActiveClassesArray[i][1];
+				eek ("  Quorum: found " + t + " " + ActiveClassesArray[i][0] + " cards in the Active Classes array") ;
+			}
+
+		if (t > CellCount) {
+			return true ;
+		} else {
+			return false ;
+		}
+	}
+
+
+
+/*	setTimeout() tip -- maybe it's been fixed since Flash 8 came out.  Seems to work in CS4 ...
+
+	Found this tip on http://www.flashguru.co.uk/flash-8-settimeout
+	
+	"Note: That to use the setTimeout function in Actionscript 2 classes, you will 
+	need to use array notation to avoid compiler errors as this function was left 
+	out of the intrinsic class definition files:"
+	//call the showPopup function once after a second (1000 ms)
+	_global['setTimeout'](this,'showPopup',1000);
+	
+	*/

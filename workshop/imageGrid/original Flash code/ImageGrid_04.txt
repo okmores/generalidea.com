@@ -1,0 +1,148 @@
+/*	Frame 4 from the original Flash script.  WILL NOT RUN in javascript.
+
+/*	**********
+	STUFF TO FETCH STUFF
+	
+		MediaPicker()			//	Selects items from the DrawStack
+		FetchPrototype()		//	Creates a new Card, to which we attach content selected above
+		FetchFile()				//	Fetches an image file from the server and attaches it to the card
+		GetClip()				//	loads buttons and other goodies
+		Smooth()				//	anti-alias for imported bitmaps; called by FetchFile()  */
+		
+
+/*	**********
+	MEDIAPICKER()  
+	Choose an item from the DrawStack array.   
+	
+	Beware that the Schema param here controls how items are plucked from the available list of 
+	media (DrawStack) and not how cells are selected from the grid.  In other words, "Random" here means random
+	media, not random cell position, so the var DefaultSchema is not applicable below. */
+	
+	
+	
+	function MediaPicker (Schema:String) {
+
+		if (!Schema) { Schema = "Random" ; }				// "Random" is the only scheme defined so far
+
+		switch (Schema) {
+			
+			case "Random" :
+
+				var len:Number = DrawStack.length ;			
+				var n:Number   = random (len);				//	pick a random index number from DrawStack
+				
+				f = DrawStack[n].Filename ;
+				c = DrawStack[n].Class ;
+				
+				CurrentMedia = (DrawStack[n] );
+				
+				DrawStack.splice (n, 1);					//	remove the item from the DrawStack (list of available items)
+
+				break ;
+				
+			default :
+				
+				eek ("MediaPicker():  !!  unknown failure  !!" ) ;
+		}
+		
+		MediaFile = f ;
+		MediaClass = c ;									//	Only for trace here
+
+		if (MediaFile) {
+			MC ( "MediaPicker") ;
+		}
+	}
+	
+
+/*	***************
+	FETCH PROTOTYPE()
+	Attach a prototype object from the library to "carry" the image or media content (see note below).  */
+
+
+	function FetchPrototype () {
+		
+		var CardDepth: Number = CellNumber + 100 ;
+		
+		this.attachMovie("ProtoCard", this.CardName, CardDepth) ;		 //  See DEPTH NOTE below
+		
+		CurrentCard = eval (CardName) ;  
+		
+		//MC ("FetchPrototype")  //	Instead of it happening here, the callback is executed by the prototype after it loads
+		
+	}
+	
+	/*  DEPTH NOTE: The depth assignment will be changed to match the cell number later. 
+		Loading the card at a higher depth hides any card underneath it.  After the new card is displayed, we'll 
+		delete the hidden card, then switch the new card's depth to match CellNumber.  */
+		
+
+
+/*	************
+	FETCHFILE()
+	Get the specified media file, load it, smooth it and attach it to CurrentCard.   */
+				
+	var CardLoader:MovieClipLoader = new MovieClipLoader();
+	var CardListener:Object = new Object() ;
+
+	function FetchFile (Target:Object, ContentPath:String, PlaceHolder:Object) {
+		
+		Target = CurrentCard ;
+		ContentPath = MediaFilePath + MediaFile ; 
+		PlaceHolder = Target.ClipWell ;
+		Target.Attachment = "MediaFile" ;
+		CardLoader.loadClip(ContentPath, PlaceHolder) ;
+		CardLoader.addListener(CardListener) ;
+	}
+	
+	CardListener.onLoadInit = function (TheCard:MovieClip) {
+		var n:String = TheCard._url ;
+		var i:Number = n.indexOf (".jpg") + n.indexOf (".png");
+		var m:String = TheCard._name + " loaded: "  + unescape ( TheCard._url ) ;
+
+		if ( i >= 0 ) {
+			m = m + " (smoothed)" ; 
+			Smooth (TheCard) ;
+		}
+				
+		MediaFileLoaded = true ;		
+		MC("FetchFile") 
+		
+	}
+	
+	
+/*	**************
+	GETCLIP()
+	Load buttons and other goodies using MovieClipLoader.  */
+		
+	var ClipLoader:MovieClipLoader = new MovieClipLoader();
+	var ClipListener:Object = new Object() ;	
+
+	function GetClip (ContentPath:String, PlaceHolder:Object) {
+		ClipLoader.loadClip(ContentPath, PlaceHolder) ;
+		ClipLoader.addListener(ClipListener) ;
+	}
+	
+	ClipListener.onLoadInit = function (NewClip:MovieClip) {
+
+		n = NewClip._name ;
+		u =  ":  " + unescape (NewClip._url) ;
+		m = "Loaded " + n ;
+		eek ( m + u);													//	Troubleshooting
+		MakeBtns (n) ;													//	MORON ALERT  <---   !!  Which Btns?  What if we're not loading buttons?  !!
+
+	}
+	
+
+/*	************
+	SMOOTH()  
+	Antialiasing for imported bitmaps. Needed if an image is scaled or rotated */
+	
+	import flash.display.* ;
+
+	function Smooth (mc:MovieClip) {
+		
+		var TempBitmap:BitmapData = new BitmapData (ImageW, ImageH, true, 0x000000) ;
+		mc.attachBitmap (TempBitmap, 0, "auto", true) ;
+		TempBitmap.draw (mc);
+
+	}

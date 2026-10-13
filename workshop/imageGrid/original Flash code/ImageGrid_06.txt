@@ -1,0 +1,576 @@
+/*	Frame 6 from the original Flash script.  WILL NOT RUN in javascript.	
+
+/*	***************
+	CLASS MANAGER
+	
+	Controllers for adding and removing sets of cards; differentiated by the Class attribute 
+	in the data.  Automaticaally loads the data from the server if it hasn't already been loaded.
+		
+		SetBtnState()			AddClass()
+		ToggleClass()			OmitClass()
+		BuildDrawStack()		UpdateVault()			
+		UpdateClasses()			Purge()
+		ClassAssassin()			RestoreClass()
+		TagClass()				NullClass()
+		CleanStack()			Deprecated --> ClassMgr()
+		
+		ActiveClass()			Returns the index number of the Class in the ActiveClassesArray
+	
+	Classes are added to the Vault array by loading an xml file.  As of now, each xml data 
+	file contains descriptions of one class of media ("Film", "Photo", etc.).  Each class
+	is loaded into a temporary array (LoadStack), then transfered as an array into the Vault 
+	along with a Class name and a Count of the number of records in that class.
+	
+	Note: In javascript, the Class might also refer to as Schema.  It's essentially the same thing,
+	namely a group of related records or objects that share a common theme.  The Class (or Schema) 
+	more or less divides content into different areas of interest.  These expressions are 
+	not relevant to any programming terms.
+	
+	When a Class is "omitted", it just means existing cards of that type will 
+	disappear from the stage.  The data records remain in the Vault array so cards can be re-added.
+	OmitClass() calls for a Purge() of the DrawStack, the DiscardStack and the OnStage array.  For 
+	the OnStage array, though, the cards being removed are only marked (Tag = true), not 
+	removed from the array.  A marked card is deleted from the DiscardStack by ClassAssassin(), 
+	which runs just before RecycleCards() moves the records back to the DrawStack.  This way, 
+	you can re-add and re-omit cards immediately with no ill-effect.  (Theoretically)
+		
+	As of now, cards are not removed from the stage except by being bumped off by a new card,
+	Omitting an entire Class of cards or "Brooming" the whole stage.  
+		
+		NOTE 1: There are descriptions of the Vault and Stack array structures at the bottom.  
+		
+		NOTE 2:  Classes match BtnNames associated with that Class.  Even so, buttons are 
+		primarily identified by their ID number so the names can be generated at runtime and not 
+		hand-coded.  The Button Name is an internal name.  The button legend is separate, 
+		as is the button's instance name.  (UpdateBtn() accepts either an ID number
+		or a Button Name.  The ID number is probably faster but haven't noticed a problem so 
+		have resorted to BtnName, which results in cleaner code in most cases.)
+		
+	WIP:
+	
+		There's a bug that occasionally leaves a card behind when omitting cards of its class. 
+		Very rare but very annoying...  <--  Apparently fixed  <--  Not fixed ! 
+		
+		Update: The bug occurs more often in HTML, when working off the server.  Must be a 
+		timing thing...   */
+		
+		
+/*	**********
+	ADDCLASS()
+	Adds a Class to the stage.  Automatically calls ImportXML() to load data into 
+	the Vault first if needed, which will then add the contents to the DrawStack;
+	Or, if the Class has already been loaded, skip that step and call 
+	BuildDrawStack() directly.   */
+	
+	function AddClass (BtnIDNum:Number, TheClass:String) {
+		var Load = true,
+			i = 0;
+		
+		for (i in Vault){
+		if (Vault[i][0] == TheClass){
+			Load = false;
+			}
+		}
+		
+		if ( Load) {
+			ImportXML (TheClass) ;
+		} else {
+			BuildDrawStack (TheClass) ;
+		}
+	}		
+
+
+/*	**********
+	ADDNULLCLASS()
+	For a class with no ImageGrid but we need to set certain elements or states,
+	manage btn appearance, etc.  Send a message to Javascript or other calling party 
+	that everything is ready.  <-- not sure if this is used or what it's for...  */
+	
+	function AddNullClass(TheClass){
+	}
+
+
+/*	***********
+	BUILDDRAWSTACK () 
+	Transfers records from Vault to DrawStack; called by ImportXML() after loading Class data, 
+	or directly by AddClass() if the the records are already in the Vault.  
+	
+	First, break the reference back to the Vault array.   */
+
+	function BuildDrawStack (TheClass) {
+	
+			for (i in Vault ) {
+				if (Vault[i][0] == TheClass) {
+					n = Vault[i][2] ;
+					
+					for (r in Vault[i][1]) {
+						
+						var Cla:String	= Vault[i][1][r].Class,			//	}	Pick out the data; convert to strings.
+							Cod:String  = Vault[i][1][r].Code,			//	}	We're breaking the reference back to the Vault
+							Nam:String	= Vault[i][1][r].Name,			//	}
+							Fil:String	= Vault[i][1][r].Filename,		//	}
+							Lin:String	= Vault[i][1][r].Link;			//	}
+						
+						DrawStack.push ({ Class:Cla, Code:Cod, Name:Nam, Filename:Fil, Link:Lin, Tag:false }) ;
+						//eek ("BuildDrawStack(): Added {" + Cla + ", " + Cod + ", " + Nam + ", " + Fil + ", " + Lin + "}" ) ;
+					}
+					
+					ActiveClassesArray.push ([TheClass, n]) ;			//	Add the Class and the number of cards to the "Active" (on stage) array;
+					UpdateClasses ("Active") ;							//	Re-calculates a string that contains the name(s) of the active class(es) <-- OBSOLETE
+					CurrentClass = TheClass;							//	This is now the "current" class; GOTCHA: if not in RadioMode, a Class can be "active" without being the CurrentClass
+					eek ("BuildDrawStack(): Added " + n + " " + TheClass + " Cards" ) ;
+					break ;
+				}
+			}
+			
+			DealCards();
+	}
+	
+	var WarshedUp = false;
+	
+	function DealCards(){
+			if (!ShowTime) {SweepStage();}
+			MC ("ShowTime");											//	MC() has a gatekeeper to automatically flag a new Show from scratch
+			UpdateBtnGroup (HatBtnPad, "HatBtns", TheClass);			//	Light up the appropriate button, turn off others in set		}	!!  no provision for RadioMode Y/N  !!
+			Flash();													//	load CellCount number of cards as fast as possible
+			if (BufferSpeed == "Manual") {Throttle ("Medium");}			//	got to shake up the screen or it looks like nothing happened
+		
+		
+		
+		}
+	
+	
+/*	************
+	TOGGLECLASS()
+	Checks to see if a class is available, then calls the appropriate function to turn it on 
+	(or off). Pass along the BtnIDNum so the btn can be updated.
+	This will not consider btn states other than "OFF" and "ON".  See SetState() below.
+	Considers RadioMode and responds accordingly (if !RadioMode, more than one class can be
+	active at a time.
+	
+	This function is very old and strange.  It's sort of passive.  Notes values,
+	then at the bottom takes actions based on the situation..  
+	
+	*/
+		
+	function ToggleClass (BtnIDNum:Number, TheClass:String, Deal) {
+		
+		var Curr =	false,
+			IsOn =	false,
+			Last =	false,										//	NOTE 1
+			Broom = false,
+			Add =	false,
+			Deal =	false;
+		
+		//if (Deal) {Deal = true;}								//	for some reason, a provision for loading a class with no cards is included; doesn't seem to be used now
+		//if (TheClass == CurrentClass) {Curr = true;}			//	} GOTCHA A Class can be Active but not the CurrentClass;
+																//	} this may be mitigated, however, by checking for IsOn below;
+																//	} but remember, Javascript might be in a particular CurrentClass
+		Curr = TheClass == CurrentClass;
+		IsOn = ActiveClass(TheClass);
+		
+		//for (i in ActiveClassesArray){
+		//	if (ActiveClassesArray[i][0] == TheClass){
+		//			IsOn = true;
+		//		}
+		//	}				
+		
+		if (ActiveClassesArray.length == 1 && Curr == true) {Last = true;}  //  NOTE 1
+		
+		if (RadioMode) {							//	RadioMode; only one class on at a time
+			
+			if (IsOn) {								//	RadioMode && Class is active...
+				eek("ToggleClass() " + TheClass + " is ON");
+				if(Curr){							//	RadioMode && IsOn, has to be true, right?
+					eek("ToggleClass() " + TheClass + " is Current");
+					if (Last) {						//	RadioMode && IsOn && Curr, has to be true, right?
+						eek("ToggleClass() " + TheClass + " is the only Class")
+						if (AutoExit) {				//	AutoExit; removing the last class exits the show
+							Broom = true ;			//	Broom the stage
+						}							//	but if not AutoExit, don't do anything					
+					}
+				}
+			
+			}else{									//	btn is not on; switch to TheClass;
+				//OmitClass(CurrentClass);			//	<-- this makes RadioMode work-- used to make RadioMode work;
+				Add = true ;						//	Skip down to the action bits
+			}
+				
+		}else{										//	not Radio btns; below simply adds and omits classes
+			if (IsOn){
+				if(Curr){
+					if(Last){
+						if(AutoExit){				//	AutoExit: removing the last active class exits the show
+							FlushCards("Broom");	//	end show
+						}else{
+							eek ("ToggleClass(): sorry, can't omit the last class.");
+						}
+					}else{							//	not Last, okay to omit
+						OmitClass(TheClass);
+					}
+				}else{								//	not Current, okay to omit
+					OmitClass(TheClass);
+				}
+			}else{									//	not on so add it
+				AddClass(BtnIDNum, TheClass);
+			}
+		}
+		
+		if (Add) {
+			eek ("ToggleClass(): Add " + TheClass) ;
+			AddClass (BtnIDNum, TheClass);						//	add the new class and deal the cards
+		}
+		
+		if (Broom && ShowTime){
+			FlushCards("Broom");								//	clear all Cards and exit ImageGrid
+		}
+
+	}
+	
+	//	NOTE 1 -- For an application that can display multiple classes simultaneously (not RadioMode), 
+	//	this prevents the last class from being omitted if AutoExit is off (false)
+
+
+/*	************
+	OMITCLASS()
+	Omits Cards of the specified Class; leaves records in the Vault un-touched;  
+	!! --> Removed --> If AutoExit is OFF (false), test to make sure enough cards remain to fill the Grid.
+	Farms out the dirty business to Purge().   */
+	
+	function OmitClass (TheClass) {	 
+
+		eek ("OmitClass(): removing " + TheClass);
+		
+		for (i in ActiveClassesArray) {
+			if (ActiveClassesArray[i][0] == TheClass) {
+				ActiveClassesArray.splice(i,1) ;
+				Purge (TheClass) ;
+			}
+		}
+			
+		UpdateClasses ("Active" ) ;
+		UpdateBtn (HatBtnPad, TheClass, "OFF") ;
+	}		
+
+
+/*	**********
+	UPDATECLASSES ()
+	Updates VaultClasses or ActiveClasses; traces info about the classes in Vault; 
+	updates from scratch on every call  */ 
+	
+	function UpdateClasses (Target:String) {
+		
+		var TextString:String = "" ;
+		
+		if (Target == "Vault") {
+		
+			VaultClasses = "" ;
+			Comma = "" ;
+			var len:Number = Vault.length ;
+			eek ("The Vault contains:" ) ;
+			
+			for (i=0;  i < len; i++ ) {
+				c = Vault[i][0] ;
+				n = Vault[i][2] ;
+				eek ( "\t" + n + " \t" + c + "Cards ") ;
+				if (i > 0) { Comma = "," ; }
+				VaultClasses = VaultClasses + Comma + Vault[i][0] ;
+			}
+			
+		} else if (Target == "Active") {								//	<-- Obsolete; only useful for dev panel
+			
+			ActiveClasses = ActiveClassesArray.toString() ;				//	<-- Obsolete; use ActiveClass(theClass) instead
+			eek ("UpdateClasses(): Active classes: " + ActiveClassesArray.length ) ;
+		
+		} else {
+			
+			eek ("  !! UpdateClasses(): unknown parameter  !!  " ) ;
+		}
+	}	
+	
+	
+/*	************
+	ACTIVECLASS
+	Return the index number of the Class in the ActiveClassesArray	*/
+	
+	var ActiveClass = function(theClass) {
+		var i;
+		for (i in ActiveClassesArray){
+			if (ActiveClassesArray[i][0] == theClass){
+					return i;
+				}
+			}			
+		}
+
+
+
+/*	**********
+	SETBTNSTATE ()
+	Change the status of a Btn/Class.  Actually just makes buttons available or not. 
+	Use this to change from inactive to active, unavailable to available, visible to
+	invisible.  SetBtnState will not load class data and only operates on Btn States.
+	In normal operation, rely on AddClass and ToggleClass, which ignore classes/buttons 
+	that are Locked, Invisible or Hidden.  */
+	
+	function SetBtnState (TheClass, TheState) {
+		eek("SetState(): " + TheClass + " " + TheState);
+		var ID = HatBtnPad.GetBtnID(TheClass);
+		HatBtnPad.SetState (ID, TheState);
+	}
+
+
+/*	***********
+	
+	Below here are Card handlers  */
+
+/*	***********
+	PURGE()  
+	Remove records of the specified Class from the specified Stack;
+	note special rules for cards that are on stage  */
+
+	function Purge (TheClass:String) {
+		TagClass (DrawStack, TheClass, "Draw Stack") ;	
+		TagClass (OnStage, TheClass, "OnStage Stack") ;
+		TagClass (DiscardStack, TheClass, "Discard Stack") ;
+		CleanStack (DrawStack, TheClass, "Draw Stack") ;
+		CleanStack (DiscardStack, TheClass, "Discard Stack") ; 
+	}
+	
+	
+/*	*************
+	TAGCLASS()
+	Tag cards of a Class in a CardStack (usually to be ommitted).  */ 
+	
+	function TagClass (TheStack, TheClass:String, TheStackName:String) {
+		n = 0 ;
+		for (i in TheStack ) {
+			if (TheStack[i].Class == TheClass) {
+				TheStack[i].Tag = true ;
+				n++ ;
+			}
+		}
+		eek ( "	Tagged  " + n + " " + TheClass + "Cards for removal from the " + TheStackName) ;
+	}
+			
+			
+/*	*************
+	CLEANSTACK()
+	Remove cards that have been tagged OR are of a certain Class.  Seems like overkill
+	but cards keep slipping through.  Don't use this on the OnStage array.  Use ClassAssassin() instead. */
+	
+	function CleanStack (TheStack, TheClass, TheStackName:String) {
+		n = 0 ;
+		for ( i in TheStack ) {
+			len = TheStack.length ;
+			for (r=0; r< len ; r++) {
+				if (TheStack[r].Class == TheClass || TheStack[r].Tag == true) {
+					TheStack.splice(r,1) ;					//	delete the card from the stack
+					n++
+				}
+			}
+		}
+		eek ("	Omitted " + n + " " + TheClass + "Cards from the " + TheStackName ) ;   
+	}
+	
+	
+/*	************
+	CLASSASSASSIN()
+	Root out cards tagged in a purge; also attempts to snag any stray records that
+	slip through.  */
+	
+	function ClassAssassin() {
+		
+		var k,n,c,j;
+		
+		if (DiscardStack.length > 0) {
+			
+			for ( i in DiscardStack) {
+				
+				//k = false ;									//	Next in line
+				n = DiscardStack[i].Name ;					//	Your papers please
+				k = DiscardStack[i].Tag ;					//	Have you been tagged for extermination? (Tag is a Boolean)
+				c = DiscardStack[i].Class ;					//	While we're at it, let's verify your Class, you.
+				j = ActiveClass(c);							//	Is your Class on the Active Class list?
+				
+				if (!j || k) {								//	Guards!
+					DiscardStack.splice (i,1) ;
+					eek ("	ClassAssassin() rubbed out " + c + "Card: \t" + n ) ;
+					}
+				
+				/*
+				if (ActiveClasses.indexOf(c) < 0) {			//	Is your Class on the list?
+					k = true ;								//	No?  Well, then.
+				}
+				
+				if ( k) {									//	In either case, Guards!
+					DiscardStack.splice (i,1) ;
+					eek ("	ClassAssassin() rubbed out " + c + "Card: \t" + n ) ;
+				}
+				*/
+			
+			}
+		}
+		//DupeNukem () ;										//	Checksum - verify number of cards is correct
+	}
+	
+	
+	
+/*	*************
+	SWEEPSTAGE()
+	Yet another hack to zap stray cards left after a Flush.  Pesky buggers.  
+	This one is looking for orphaned clip instances, maybe stranded during a FlushCards()
+	operation.  Still not 100% success... */
+	
+	function SweepStage(callback) {
+		
+		c = CellCount * 5 ;						//	include cards orphaned during MakeCard (with higher depth than normal)
+		
+		for (i=0; i<c; i++) {
+			n = undefined ;
+			n = this.getInstanceAtDepth (i) ;				//	identify any strays at this depth
+			if ( n ) {
+				n.removeMovieClip() ;						//	remove it
+				eek ("  !!  Removed stray card in cell " + i + "  !!" ) ;
+			}
+		}
+
+		if (callback){
+			callback();
+		}
+	}
+	
+	
+/*	************
+	DupeNukem()
+	Duplicates happen.  Find them and kill them.  
+	(But really just doing a checksum on the cards at the moment so this is POINTLESS)    
+	
+	Update  :-(  in HTML from the server, cards can be left on stage after a broom   !!  FIX NEEDED  !!  
+			probably has to do with timing...  */				
+	
+	function DupeNukem () {
+		
+		s1 = DrawStack.length ;
+		s2 = OnStage.length ;
+		s3 = DiscardStack.length ;
+		
+		ActiveCardsCheckSum = s1 + s2 + s3 ;
+		
+		t = ActiveCardsCheckSum - ActiveCards ;
+		eek ("Active Cards CheckSum = " + t ) ;
+	}
+	
+/*	************
+	NukeEm()
+	The ultimate solution.  Remove all cards of any kind.  Clean the decks.  
+	 */			
+	
+	function NukeEm () {
+		DrawStack = [];
+		OnStage = [];
+		DiscardStack = [];
+	}
+					
+	
+/*	************
+
+	VAULT STRUCTURE
+	
+	[0]							//	just an index, no names
+		[0] Class:String	//	no field names, just the data
+		[1] Items:Array			//	an un-named array within the Vault array
+		[2] Count:Number		//	number of elements in the array element above
+	[1]
+		[0] Class:String	//	"Photo"
+		[1] Items:Array			//	an array of PhotoCard records with 9 records
+		[2] Count:Number		//	9
+	[2] (etc...)
+	
+	To access the Count in the second record, use Vault[1][2]	*/
+	
+	
+/*	************
+
+	DRAWSTACK STRUCTURE 
+	(as well as other stacks containing cards)
+	
+	[0] Class, Code, Filename, Link, Tag		//	data contained in named pairs (or Key/Value if you prefer)
+	[1] Class, Code, Filename, Link, Tag		//	
+	[2] (etc...)
+	
+	To access the Filename in the second record, use DrawStack[1].Filename
+
+*/
+
+
+/*	************
+	BTNPAD BTN ARRAY KEY:VALUE
+	Btns[i] = {Name:"Film", State:"ON", Width:36, Height:36} ;		//	Btns[i] == IDNum
+	
+*/
+
+
+	
+	
+/*	method to change radio btn groups on the fly replaced by ToggleClass()
+
+
+	************
+	CLASSMGR() 
+	Sort out which Classes can be active at the same time.   
+	
+	function ClassMgr (TheBtnPad, TheBtnGroup, TheClass:String) {
+		
+		var f = false ;							//	FlashMode
+		var c = TheClass ;
+
+		if (RadioMode) {						//	Radio Buttons -- only one active class at a time
+				
+			for ( i in TheBtnGroup ) {
+				var j = TheBtnGroup[i][0] ;
+				var n = TheBtnPad[j].Name ;
+				if (c = n) {
+					UpdateBtn (TheBtnPad, j, "ON" ) ;
+				} else {
+					UpdateBtn (TheBtnPad, j, "OFF" ) ;
+				}
+			}
+			
+			if (Class != c) { f = true ; }
+		
+		}else{									//	Look for some other scheme for button control  <--  might be obsolete
+												//	Like this, for example:
+			var k1 = undefined ;				//	button 1 to turn off						}	clunky -- use an array
+			var k2 = undefined ;				//	button 2 to turn off (add more if needed)	}
+	
+			switch (TheClass) {					
+				case "Logo" :
+				case "Clients" :			//	When turning this Class ON...
+					k1 = "Photo" ;			//	Turn these OFF
+					k2 = "Film" ;			//	(etc.)
+					break ;
+					
+				case "Film" :
+				case "Photo" :
+					k1 = "Logo" ;
+					break ;
+					
+				default :
+					eek ( "  !!  ClassMgr() - unknown Class requested  !! " ) ;
+					break ;
+			}
+			
+			for ( i in ActiveClassesArray ) {
+				if (ActiveClassesArray[i] == k1 || ActiveClassesArray[i] == k2 ) {
+					OmitClass (ActiveClassesArray[i]) ;	
+					f = true ;
+				}
+			}
+		}
+		
+		if ( f ) {
+			Flash() ;						//	FlashMode on
+		}
+	}
+	
+	*/
