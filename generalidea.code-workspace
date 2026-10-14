@@ -15,5 +15,11 @@
 		"liveServer.settings.multiRootWorkspaceName": "03",
 		"scm.inputMaxLineCount": 10,
 		"scm.inputMinLineCount": 1,
+		"editor.cursorBlinking": "solid",
+		"workbench.experimental.modernUI": true,
+		"editor.minimap.enabled": false,
+		"editor.minimap.renderCharacters": false,
+		"editor.minimap.side": "left",
+		"editor.minimap.size": "fill",
 	}
 }
