@@ -122,10 +122,10 @@ header {
 	min-height: 0;
 	hyphens: auto;
 	margin: auto;
-	/* touch-action: none; */
+	/* touch -action: none; */
 	}
 
-/* TEMP: This is a simple box with text and a smll picture. It works perfectly on desktop and on iPhone. However, only on Firefox, the color background is very dark and completely wrong. Is there something here that looks suspicious or perhaps there's some known issue on Firefox? */
+/* TEMP: This is a simple box with text and a small picture. It works perfectly on desktop and on iPhone. However, only on Firefox, the color background is very dark and completely wrong. Is there something here that looks suspicious or perhaps there's some known issue on Firefox? */
 
 	/* NOTE: &shy; (soft hyphen) character: Indicates a potential place 
 	to insert a hyphen when hyphens: manual; is specified. */
