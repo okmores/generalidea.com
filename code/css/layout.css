@@ -89,9 +89,9 @@ header {
 
 /* --- DICTIONARY --- */
 
-#dictionary {
+/* #dictionary {
 	color-scheme: light;
-}
+} */
 
 #dictionary .full-page-wrapper {
 	display: grid;
@@ -105,7 +105,8 @@ header {
 }
 
 #dictionary .dictionary-container {
-	background-color: hsl(30, 15%, 75%);
+	/* background-color: hsl(30, 15%, 75%); */
+	/* background-image: url("/media/images/chrome/DictionaryColor.svg"); */
 	color: black;
 	border-radius: 10px;
 	grid-column: 2 / 3;
@@ -154,6 +155,7 @@ header {
 	/* Move image down trick: */
 	/* https://css-tricks.com/float-element-in-the-middle-of-a-paragraph/ */
 	/* https://codepen.io/chriscalo/pen/zYYaVKm */
+	
 	.float-shim::before {
 		content: "";
 		float: right;
