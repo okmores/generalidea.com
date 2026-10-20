@@ -109,7 +109,7 @@ header {
 	/* background-image: linear-gradient(hsl(30, 15%, 65%), hsl(30, 15%, 75%)); */
 	background-image: url("/media/images/chrome/DictionaryColor.png");
 	/* -webkit-text-fill-color: black; */
-	color: black;
+	/* color: black; */
 	/* forced-color-adjust: none; */
 	border-radius: 10px;
 	grid-column: 2 / 3;
