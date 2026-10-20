@@ -107,8 +107,10 @@ header {
 #dictionary .dictionary-container {
 	background-color: hsl(30, 15%, 75%);
 	/* background-image: linear-gradient(hsl(30, 15%, 65%), hsl(30, 15%, 75%)); */
-	/* background-image: url("/media/images/chrome/DictionaryColor.svg"); */
+	background-image: url("/media/images/chrome/DictionaryColor.png");
+	-webkit-text-fill-color: black;
 	color: black;
+	/* forced-color-adjust: none; */
 	border-radius: 10px;
 	grid-column: 2 / 3;
 	grid-row: 2 / 3;	
