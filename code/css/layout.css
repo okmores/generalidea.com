@@ -135,7 +135,7 @@ header {
 	to insert a hyphen when hyphens: manual; is specified. */
 
 #dictionary p {
-	color: hsl(0, 86%, 22%);
+	/* color: hsl(0, 86%, 22%); */
 	font-size: inherit;
 	margin: 0;
 	/* Firefox iOS Website Dark Mode remaps CSS colors but not images,
