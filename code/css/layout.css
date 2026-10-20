@@ -106,7 +106,7 @@ header {
 
 #dictionary .dictionary-container {
 	background-color: hsl(30, 15%, 75%);
-	background-image: linear-gradient(hsl(30, 15%, 65%), hsl(30, 15%, 75%));
+	/* background-image: linear-gradient(hsl(30, 15%, 65%), hsl(30, 15%, 75%)); */
 	/* background-image: url("/media/images/chrome/DictionaryColor.svg"); */
 	color: black;
 	border-radius: 10px;
