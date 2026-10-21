@@ -105,9 +105,9 @@ header {
 }
 
 #dictionary .dictionary-container {
-	background-color: hsl(30, 15%, 75%);
-	/* background-image: linear-gradient(hsl(30, 15%, 65%), hsl(30, 15%, 75%)); */
-	background-image: url("/media/images/chrome/DictionaryColor.png");
+	/* No background-color: Firefox iOS Website Dark Mode darkens it, but not images. */
+	background-image: url("../../media/images/chrome/DictionaryColor.png");
+	background-size: cover;
 	/* -webkit-text-fill-color: black; */
 	/* color: black; */
 	/* forced-color-adjust: none; */
