@@ -105,7 +105,7 @@ header {
 }
 
 #dictionary .dictionary-container {
-	color-scheme: light;
+	
 	background-image: url("../../media/images/chrome/DictionaryColor.png");
 	background-size: cover;
 	border-radius: 10px;
