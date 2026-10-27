@@ -106,7 +106,7 @@ header {
 
 #dictionary .dictionary-container {
 	
-	background-image: url("../../media/images/chrome/DictionaryColor.png");
+	/* background-image: url("../../media/images/chrome/DictionaryColor.png"); */
 	background-size: cover;
 	border-radius: 10px;
 	grid-column: 2 / 3;
