@@ -105,8 +105,8 @@ header {
 }
 
 #dictionary .dictionary-container {
-	
-	/* background-image: url("../../media/images/chrome/DictionaryColor.png"); */
+	/* background-image: url("../../media/images/posters/HalfBrainPoster01_SHR.jpg"); */
+	background-image: url("../../media/images/parts/dictionary/DictionaryPaper.webp");
 	background-size: cover;
 	border-radius: 10px;
 	grid-column: 2 / 3;
@@ -138,11 +138,13 @@ header {
 	/* Firefox iOS Website Dark Mode remaps CSS colors but not images,
 	so the text is filled with a black image clipped to the glyphs. */
 	background-color: transparent;
-	color: transparent;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23000'/%3E%3C/svg%3E");
+	color: black;
+		/* background-image: url("../../media/images/chrome/DictionaryColor.png"); */
+	/* background-image: url("../../media/images/posters/HalfBrainPoster01_SHR.jpg"); */
+	/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23000'/%3E%3C/svg%3E"); */
 	background-size: 100% 100%;
-	-webkit-background-clip: text;
-	background-clip: text;
+	/* -webkit-background-clip: text; */
+	/* background-clip: text; */
 } 
 
 #dictionary aside {

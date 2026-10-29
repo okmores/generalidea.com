@@ -48,11 +48,12 @@ html, body {
 	}
 
 @media (prefers-color-scheme: dark) {
-  .dictionary-container {
-    background: #cd6a3c;
-    color: #333344;
-    outline: 2px solid red;
-  }
+  /* .dictionary-container { */
+
+    /* background: #cd6a3c; */
+    /* color: #333344; */
+    /* outline: 2px solid red; */
+  /* } */
 }
 
 ul, ol {margin: 0px;}
