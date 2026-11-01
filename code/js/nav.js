@@ -89,7 +89,7 @@ function showMenu (srcEl, option){
 	srcClasses.remove("closed");
 	srcClasses.add("open");
 	srcEl.dataset.state = "open";
-	console.log(`showMenu(79): ${srcName} ${theOption}`);
+	console.log(`showMenu: ${srcName} ${theOption}`);
 }
 async function hideMenu(srcEl, delay, option) {
 	const srcClasses = srcEl.classList;
@@ -100,7 +100,7 @@ async function hideMenu(srcEl, delay, option) {
 	srcClasses.remove("open");
 	srcClasses.add("closed");
 	srcEl.dataset.state = "closed";
-	console.log(`hideMenu(89): ${srcName} ${option? `option: ${option}` : ""} delay: ${theDelay}`);
+	console.log(`hideMenu: ${srcName} ${option? `option: ${option}` : ""} delay: ${theDelay}`);
 }
 
 // ==== TOUCH HANDLERS ===== //

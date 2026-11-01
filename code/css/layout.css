@@ -126,6 +126,7 @@ header {
 	min-height: 0;
 	hyphens: auto;
 	margin: auto;
+	user-select: none;
 	}
 
 	/* NOTE: &shy; (soft hyphen) character: Indicates a potential place 
@@ -151,6 +152,7 @@ header {
 	height: fit-content;
 	float: right;
 	clear: right;
+	pointer-events: none;
 	}
 		
 #pruPic {
