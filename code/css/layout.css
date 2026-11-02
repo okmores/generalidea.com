@@ -145,11 +145,6 @@ header {
 	}
 		
 #pruPic {
-		background-repeat: no-repeat;
-		background-color: transparent;
-		isolation: isolate;
-		aspect-ratio: .58;
-		scale: 100%;
 		width: calc(var(--viewport-size-factor) * 0.8);
 		margin-left: 1rem;
 		float: right;
