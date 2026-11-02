@@ -89,10 +89,6 @@ header {
 
 /* --- DICTIONARY --- */
 
-/* #dictionary {
-	color-scheme: light;
-} */
-
 #dictionary .full-page-wrapper {
 	display: grid;
 	grid-template-rows: 5% 1fr 5%;
@@ -102,6 +98,7 @@ header {
 	justify-content: center;
 	margin: auto;
 	height: 90%;
+	user-select: none;
 }
 
 #dictionary .dictionary-container {
@@ -144,6 +141,7 @@ header {
 	/* background-image: url("../../media/images/posters/HalfBrainPoster01_SHR.jpg"); */
 	/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23000'/%3E%3C/svg%3E"); */
 	background-size: 100% 100%;
+	user-select: none;
 	/* -webkit-background-clip: text; */
 	/* background-clip: text; */
 } 
@@ -163,6 +161,7 @@ header {
 		margin-left: 1rem;
 		float: right;
 		clear: right;
+		user-select: none;
 	}
 
 	/* Move image down trick: */
@@ -173,7 +172,7 @@ header {
 		content: "";
 		float: right;
 		width: 0px;
-		height: var(--float-shim);   /* var is in HTML */
+		height: var(--float-shim);   /* set var is in HTML */
 	}
 
 .gallery {
