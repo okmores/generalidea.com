@@ -2,6 +2,7 @@
 
 SCROLLER 	Entire site scrolls inside one div
 PAGES			Children inside Scroller, each page is 100svh
+SECTIONS		Each Section contains one page (100svh)
 
 header {
 	left: env(titlebar-area-x);
@@ -102,7 +103,6 @@ header {
 }
 
 #dictionary .dictionary-container {
-	/* background-image: url("../../media/images/posters/HalfBrainPoster01_SHR.jpg"); */
 	background-image: url("../../media/images/parts/dictionary/DictionaryPaper.webp");
 	background-size: cover;
 	border-radius: 10px;
@@ -118,32 +118,23 @@ header {
 	line-height: 1;
 	inline-size: min(100%,500px);
 	max-block-size: calc(90svh);
-	overflow: auto;
+	overflow: hidden;
+	overscroll-behavior: auto;
 	min-width: 0;
 	min-height: 0;
 	hyphens: auto;
 	margin: auto;
-	user-select: none;
 	}
 
 	/* NOTE: &shy; (soft hyphen) character: Indicates a potential place 
 	to insert a hyphen when hyphens: manual; is specified. */
 
 #dictionary p {
-	/* color: hsl(0, 86%, 22%); */
 	font-size: inherit;
 	margin: 0;
-	/* Firefox iOS Website Dark Mode remaps CSS colors but not images,
-	so the text is filled with a black image clipped to the glyphs. */
 	background-color: transparent;
 	color: black;
-		/* background-image: url("../../media/images/chrome/DictionaryColor.png"); */
-	/* background-image: url("../../media/images/posters/HalfBrainPoster01_SHR.jpg"); */
-	/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23000'/%3E%3C/svg%3E"); */
 	background-size: 100% 100%;
-	user-select: none;
-	/* -webkit-background-clip: text; */
-	/* background-clip: text; */
 } 
 
 #dictionary aside {
@@ -161,18 +152,18 @@ header {
 		margin-left: 1rem;
 		float: right;
 		clear: right;
-		user-select: none;
 	}
 
-	/* Move image down trick: */
+	/* Move image down trick */
+	/* Also see links below */
 	/* https://css-tricks.com/float-element-in-the-middle-of-a-paragraph/ */
-	/* https://codepen.io/chriscalo/pen/zYYaVKm */
+	/* https://codepen.io/chriscalo/pen/zYYaVKm <-- */
 	
 	.float-shim::before {
 		content: "";
 		float: right;
 		width: 0px;
-		height: var(--float-shim);   /* set var is in HTML */
+		height: var(--float-shim);   /* set var in HTML */
 	}
 
 .gallery {
